@@ -20,7 +20,7 @@ const Hero = () => {
                     <p className="mt-5 text-gray-600">Already joined us? <Button asChild variant="outline"><Link href="/sign-in">Sign In</Link></Button></p>
                 </div>
                 <div className="flex justify-center items-center">
-                  <Image src="/LP.png" objectFit="true" alt="Image" width={400} height={650}/>
+                  <Image src="/LP.png" alt="Image" width={400} height={650}/>
                 </div>
             </div>
         </div>

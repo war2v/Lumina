@@ -1,40 +1,100 @@
+"use client";
+
+import { z } from "zod";
+
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import Footer from "../_components/Footer";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
+
+import { SignUpSchema, SignUpFormData } from "@/schema/AuthSchema";
+import Footer from "../_components/Footer";
+
 import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createClient } from "@/lib/supabase/browserClient";
 
 const SignUpPage = () => {
-    return ( 
-        <div className=" py-5 sm:py-16 lg:py-12">
-            <div className="px-4 py-10 mx-auto max-w-[50rem] sm:px-6 lg:px-8">
-                <Card>
-                    <CardContent>
-                        <CardHeader>
-                            <h1 className="text-2xl text-center font-bold">Sign Up</h1>
-                        </CardHeader>
-                    </CardContent>
-                    <CardContent>
-                        <form className="flex flex-col gap-y-3 px-10">
-                            <Input placeholder="Username" />
-                            <Input placeholder="Email" />
-                            <Input placeholder="Password" />
-                            <Input placeholder="Password2" />
-                            <div className="flex items-center gap-x-2">
-                                <Checkbox /> 
-                                <h3> Remember Me</h3>
-                            </div>
-                            <Button>Sign In</Button>
-                            <Button variant="outline">Sign In With Google</Button>
-                            <p>Need an Account?<Link href="/sign-up" className="text-red-500"> Sign Up</Link></p>
-                        </form>
-                    </CardContent>
-                </Card>
-            </div>
-            <Footer />
-        </div>
-     );
-}
- 
+  const router = useRouter();
+  const supabase = createClient();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<SignUpFormData>({
+    resolver: zodResolver(SignUpSchema),
+  });
+
+  const onSubmit = async (data: SignUpFormData) => {
+    const { error } = await supabase.auth.signUp({
+      email: data.email,
+      password: data.password,
+    });
+
+    if (error) {
+      console.log(error.message);
+    } else {
+      console.log("Success");
+      router.push("/sign-in");
+    }
+  };
+
+  return (
+    <div className=" py-5 sm:py-16 lg:py-12">
+      <div className="px-4 py-10 mx-auto max-w-[50rem] sm:px-6 lg:px-8">
+        <Card>
+          <CardContent>
+            <CardHeader>
+              <h1 className="text-2xl text-center font-bold">Sign Up</h1>
+            </CardHeader>
+          </CardContent>
+          <CardContent>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col gap-y-3 px-10"
+            >
+              <Input
+                placeholder="Username"
+                type="text"
+                {...register("username")}
+              />
+              <Input placeholder="Email" type="email" {...register("email")} />
+              <Input
+                placeholder="Password"
+                type="password"
+                {...register("password")}
+              />
+              <Input
+                placeholder="Password2"
+                type="password"
+                {...register("password2")}
+              />
+              <div className="flex items-center gap-x-2">
+                <Checkbox />
+                <h3> Remember Me</h3>
+              </div>
+              <Button type="submit" disabled={isSubmitting}>
+                Sign Up
+              </Button>
+              <Button variant="outline">Sign Up Using Google</Button>
+              <p>
+                Need an Account?
+                <Link href="/sign-up" className="text-red-500">
+                  {" "}
+                  Sign Up
+                </Link>
+              </p>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+      <Footer />
+    </div>
+  );
+};
+
 export default SignUpPage;
