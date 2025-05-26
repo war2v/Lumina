@@ -37,10 +37,3 @@ Designed for clarity, ease, and connection, Lumina ensures your audience stays e
 
 ---
 
-## 🚀 Getting Started
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/your-username/lumina.git
-cd lumina
