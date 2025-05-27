@@ -10,10 +10,10 @@ export const useLogout = () => {
   const logout = async () => {
     await supabase.auth.signOut();
 
-     await fetch('/api/auth/sign-out', {
+    await fetch('/api/auth/sign-out', {
       method: 'POST',
     });
-    
+
     router.push('/sign-in');
   };
 
