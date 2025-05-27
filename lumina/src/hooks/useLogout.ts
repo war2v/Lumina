@@ -9,6 +9,11 @@ export const useLogout = () => {
   const supabase = createClient();
   const logout = async () => {
     await supabase.auth.signOut();
+
+     await fetch('/api/auth/sign-out', {
+      method: 'POST',
+    });
+    
     router.push('/sign-in');
   };
 
