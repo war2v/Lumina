@@ -9,12 +9,8 @@ import { useLogout } from "@/hooks/useLogout";
 const url = "/user/home";
 const navItems = [
   { label: "Home", icon: Home, href: `${url}` },
-  {
-    label: "Create Presentation",
-    icon: Presentation,
-    href: `${url}/create-presentation`,
-  },
-  { label: "Find Presentation", icon: Search, href: `${url}/search` },
+  { label: "Create Presentation", icon: Presentation, href: `${url}/create-presentation`, },
+  { label: "Find Presentation", icon: Search, href: `${url}/find` },
   { label: "My Notes", icon: FileText, href: `${url}/notes` },
 ];
 
