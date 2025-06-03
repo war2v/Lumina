@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/serverClient";
 import SignInForm from "../_components/SignInForm";
 import { redirect } from "next/navigation";
+import SignUpForm from "../_components/SignUpForm";
 
 const SignUpPage = async () => {
   const supabase = await createClient();
@@ -14,7 +15,7 @@ const SignUpPage = async () => {
 
   return (
     <div className=" py-5 sm:py-16 lg:py-12">
-      <SignInForm />
+      <SignUpForm />
     </div>
   );
 };

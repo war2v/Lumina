@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, FileText, LogOut, Presentation, Search } from "lucide-react";
+import { Home, FileText, LogOut, Search,  Monitor, Grid2X2Plus } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -9,16 +9,17 @@ import { useLogout } from "@/hooks/useLogout";
 const url = "/user/home";
 const navItems = [
   { label: "Home", icon: Home, href: `${url}` },
-  { label: "Create Presentation", icon: Presentation, href: `${url}/create-presentation`, },
+  { label: "Create Presentation", icon: Monitor, href: `${url}/create-presentation`, },
   { label: "Find Presentation", icon: Search, href: `${url}/find` },
   { label: "My Notes", icon: FileText, href: `${url}/notes` },
+  { label: "My Presentations", icon: Grid2X2Plus, href: `${url}/presentations`}
 ];
 
 export default function Sidebar() {
   const logout = useLogout();
 
   return (
-    <aside className="w-64  bg-muted/50 border-r flex flex-col p-4">
+    <aside className="bg-muted/50 border-r flex flex-col p-4">
       <Link href="/" className="flex">
         <Image src="/logo.svg" alt="Logo" width={180} height={30} />
       </Link>
