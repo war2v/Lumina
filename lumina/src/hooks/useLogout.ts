@@ -1,4 +1,3 @@
-// lib/auth/logout.ts
 'use client';
 
 import { useRouter } from 'next/navigation';
@@ -15,6 +14,8 @@ export const useLogout = () => {
     });
 
     router.push('/sign-in');
+    router.refresh() // Page Must refresh on log out to reset nav bar 
+                    //  NavBar = server, Logout button = client component.
   };
 
   return logout;

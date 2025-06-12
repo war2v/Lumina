@@ -61,7 +61,6 @@ export default function CreatePresentationForm({
       setSubmitError(error.message);
     } else {
       redirect(`/user/presentations/${data[0].id}`);
-      console.log(data);
       //redirect(`user/home/presentation/${}`)
       if (onSuccess) {
       }
