@@ -60,7 +60,7 @@ export default function CreatePresentationForm({
     if (error) {
       setSubmitError(error.message);
     } else {
-      redirect(`/user/presentations/${data[0].id}`);
+      redirect(`/user/home/presentations/${data[0].id}`);
       //redirect(`user/home/presentation/${}`)
       if (onSuccess) {
       }

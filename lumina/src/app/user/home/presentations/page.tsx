@@ -1,5 +1,5 @@
-import { getUserPresentations } from "@/app/queries/getUserPresentations";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { getUserPresentations } from "@/app/queries/server/getUserPresentations";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link2 } from "lucide-react";
 import Link from "next/link";
 
@@ -9,51 +9,55 @@ const MyPresentations = async () => {
 
     return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold">My Presentations</h1>
+      <h1 className="text-2xl font-bold text-gray-700">My Presentations</h1>
       {presentations?.length === 0 ? (
         <p>No presentations found.</p>
       ) : (
         <ul className="list-disc pl-5">
             
-                <CardHeader className="border-b">
-                    <h1 className="text-xl font-semibold">Active Presentations</h1>
-                </CardHeader>
-            <Card className="my-5">
-                <CardContent>
-                {presentations?.map((presentation: any) => (
-                    <Link key={presentation.id}  href="#">
-                        <div className="border my-3 rounded-lg p-2" hidden={presentation.active == true}>
-                            <h2 className="font-semibold">
-                                {presentation.title}
-                            </h2>
+            <div className="border-b py-4">
+                <h1 className="text-xl font-semibold text-muted-foreground">Active Presentations</h1>
+            </div>
+            {presentations?.map((presentation: any) => (
+                <Link  href={`/user/home/presentations/${presentation.id}`} key={presentation.id} hidden={presentation.active == true}>
+                    <Card   className="my-5 border border-transparent hover:border-gray-400 transition" >
+                        <CardHeader>
+                            <CardTitle className="text-base">{presentation.title}</CardTitle>
+                        </CardHeader>
+                        <CardContent className="text-sm text-muted-foreground">
                             
-                            <div className="flex items-center gap-x-3">
-                                <p>{presentation.description}</p>
-                            </div>
-                        </div>
-                    </Link>
-                ))}
-                </CardContent>
-            </Card>
+                                <div className="">
+                                    <div className="flex items-center gap-x-3">
+                                        <p>{presentation.description}</p>
+                                    </div>
+                                </div>
+                                
+                        </CardContent>
+                    </Card>
+                </Link>
+            ))}
 
-            <Card className="my-5">
-                <CardHeader className="border-b">
-                <h1 className="text-xl font-semibold">Completed Presentations</h1>
-                </CardHeader>
+            <div className="border-b py-4">
+                <h1 className="text-xl font-semibold text-muted-foreground">Completed Presentations</h1>
+            </div>
 
-                <CardContent>
-                    {presentations?.map((presentation: any) => (
-                        <Link key={presentation.id}  href="#">
-                        <div className="border my-3 rounded-lg p-2" hidden={presentation.active == false}>
-                            <h2 className="font-semibold">{presentation.title}</h2>
-                            <div className="flex items-center gap-x-3">
-                                <p>{presentation.description}</p>
-                            </div>
-                        </div>
-                         </Link>
-                    ))}
-                </CardContent>
-            </Card>
+            {presentations?.map((presentation: any) => (
+                <Link key={presentation.id}   href={`/user/home/presentations/${presentation.id}`}>
+                    <Card  className="my-5 border border-transparent hover:border-gray-400 transition" hidden={presentation.active == false}>
+                        <CardHeader>
+                            <CardTitle className="text-base">{presentation.title}</CardTitle>
+                        </CardHeader>
+                        <CardContent className="text-sm text-muted-foreground">
+                                <div className="">
+                                    <div className="flex items-center gap-x-3">
+                                        <p>{presentation.description}</p>
+                                    </div>
+                                </div>
+                    
+                        </CardContent>
+                    </Card>
+                </Link>
+            ))}
         </ul>
         
       )}
