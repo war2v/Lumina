@@ -24,13 +24,14 @@ const CurrentResource = ({resources}: CurrentResourceProps) => {
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const currentResource = resources[currentIndex];
-    console.log(process.env.NEXT_PUBLIC_SUPABASE_PRESENTATION_RESOURCES_URL + currentResource.file_path)
+
 
     
 
     const renderResource = () => {
+      if(currentResource) {
         switch (currentResource.file_type) {
-        case 'image':
+        case 'image/jpeg':
             return (
             <Image
                 src={process.env.NEXT_PUBLIC_SUPABASE_PRESENTATION_RESOURCES_URL + currentResource.file_path}
@@ -50,6 +51,9 @@ const CurrentResource = ({resources}: CurrentResourceProps) => {
         default:
             return <p className="text-muted-foreground">Cannot preview this file type.</p>;
         }
+      }
+      return <p className="text-muted-foreground">Cannot preview this file type.</p>;
+     
     };
 
     return ( 
@@ -62,21 +66,22 @@ const CurrentResource = ({resources}: CurrentResourceProps) => {
           <div className="flex items-center justify-between w-full mt-4">
             <Button
               onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
-              disabled={currentIndex === 0}
+              disabled={currentIndex === 0 || resources.length == 0}
               variant="outline"
             >
               <ChevronLeft className="h-4 w-4 mr-1" /> Previous
             </Button>
             <p className="text-sm text-muted-foreground">
-              {currentIndex + 1} of {resources.length}
+              {currentIndex} of {resources.length}
             </p>
+            
             <Button
               onClick={() =>
                 setCurrentIndex((prev) =>
                   Math.min(prev + 1, resources.length - 1)
                 )
               }
-              disabled={currentIndex === resources.length - 1}
+              disabled={currentIndex === resources.length - 1 || resources.length == 0}
               variant="outline"
             >
               Next <ChevronRight className="h-4 w-4 ml-1" />
