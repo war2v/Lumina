@@ -1,37 +1,50 @@
 "use client";
+import { PresentationResourceType } from "@/app/types";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import PdfViewer from "./PDFviewer";
 
 interface CurrentResourceProps {
-    resources: any;
+    resources: any[];
 }
 const CurrentResource = ({resources}: CurrentResourceProps) => {
+    if(!resources){
+      return<Card>
+        <CardHeader>
+          <CardTitle>Current Resource</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4 items-center justify-center">
+          No Resources
+        </CardContent>
+        </Card>
+    }
+
     const [currentIndex, setCurrentIndex] = useState(0);
     const currentResource = resources[currentIndex];
+    console.log(process.env.NEXT_PUBLIC_SUPABASE_PRESENTATION_RESOURCES_URL + currentResource.file_path)
 
     
 
     const renderResource = () => {
-        switch (currentResource.type) {
+        switch (currentResource.file_type) {
         case 'image':
             return (
             <Image
-                src={currentResource.url}
-                alt={currentResource.name}
+                src={process.env.NEXT_PUBLIC_SUPABASE_PRESENTATION_RESOURCES_URL + currentResource.file_path}
+                alt={currentResource.file_name}
                 width={800}
                 height={600}
                 className="rounded border"
             />
             );
-        case 'pdf':
+        case 'application/pdf':
             return (
-            <iframe
-                src={currentResource.url}
-                title={currentResource.name}
-                className="w-full h-[600px] rounded border"
+            <PdfViewer
+                url={process.env.NEXT_PUBLIC_SUPABASE_PRESENTATION_RESOURCES_URL + currentResource.file_path}
+    
             />
             );
         default:

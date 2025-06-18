@@ -14,12 +14,11 @@ export default async function PresentationPage({params}:{params: Promise<{id: st
 }) {
   const { id } = await params;
   const {active, created_at, created_by, description, is_public, title} = await getUserPresentationsById(id); 
-  const resources = [{}]//await getResourcesById(id);
+  const presentatation: PresentationType = {id, active, created_at, created_by, description, is_public, title}
+  const resources = await getResourcesById(id);
 
-  if (!resources) {
-    const resources = []
-  }
-
+  
+  console.log(resources)
 
   
 
@@ -28,7 +27,8 @@ export default async function PresentationPage({params}:{params: Promise<{id: st
   return (
     <div className="p-6 space-y-6 ">
       {/* Header */}
-      <Header title={title} />
+      <Header presentation={presentatation} />
+      
       {/* Current Slide/Resource Preview */}
       <CurrentResource resources={resources} />
 
@@ -39,7 +39,7 @@ export default async function PresentationPage({params}:{params: Promise<{id: st
       <AnalyticsCard />
 
       {/* Share Link */}
-      <ShareLink shareLink={`${id}`}/>
+      <ShareLink shareLink={`localhost:3000/user/home/presentations/${id}`}/>
 
 
       {/* All Resources List */}

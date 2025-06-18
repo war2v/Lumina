@@ -3,7 +3,18 @@ export type PresentationType = {
     created_at: string;
     created_by: string;
     description: string;
-    id: number;
+    id: string;
     is_public: boolean;
     title: string;
+}
+
+export type PresentationResourceType = {
+    id: Number,
+    created_at: string,
+    presentation_id: Number,
+    file_name: string,
+    file_path: string,
+    file_type: string,
+    file_size: string | null,
+    uploaded_by: string
 }

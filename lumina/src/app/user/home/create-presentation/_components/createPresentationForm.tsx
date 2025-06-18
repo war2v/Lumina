@@ -12,14 +12,10 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { redirect } from "next/navigation";
+import { PresentationSchema } from "@/schema/Schema";
 
-const schema = z.object({
-  title: z.string().min(1, "Title is required"),
-  isPublic: z.boolean().default(false).optional(),
-  description: z.string().optional(),
-});
 
-type PresentationFormData = z.infer<typeof schema>;
+type PresentationFormData = z.infer<typeof PresentationSchema>;
 
 export default function CreatePresentationForm({
   onSuccess,
@@ -32,7 +28,7 @@ export default function CreatePresentationForm({
     setValue,
     formState: { errors, isSubmitting },
   } = useForm<PresentationFormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(PresentationSchema),
     defaultValues: { isPublic: false },
   });
 
@@ -54,6 +50,7 @@ export default function CreatePresentationForm({
         description: Formdata.description,
         is_public: Formdata.isPublic,
         created_by: user.id,
+        active: true,
       })
       .select();
 
