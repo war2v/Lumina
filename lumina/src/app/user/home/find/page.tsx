@@ -33,9 +33,15 @@ export default function SearchPage() {
 
       {/* Filters Section */}
       <div className="flex gap-4 text-sm text-muted-foreground">
-        <Button variant="outline" size="sm">All</Button>
-        <Button variant="outline" size="sm">Public</Button>
-        <Button variant="outline" size="sm">Private</Button>
+        <Button variant="outline" size="sm">
+          All
+        </Button>
+        <Button variant="outline" size="sm">
+          Public
+        </Button>
+        <Button variant="outline" size="sm">
+          Private
+        </Button>
       </div>
 
       {/* Search Results */}
@@ -43,10 +49,13 @@ export default function SearchPage() {
         {[1, 2, 3].map((id) => (
           <Card key={id}>
             <CardHeader>
-              <CardTitle className="text-base">Presentation Title {id}</CardTitle>
+              <CardTitle className="text-base">
+                Presentation Title {id}
+              </CardTitle>
             </CardHeader>
             <CardContent className="text-sm text-muted-foreground">
-              This is a short description of presentation {id}. You can include topics, date, or tags here.
+              This is a short description of presentation {id}. You can include
+              topics, date, or tags here.
             </CardContent>
           </Card>
         ))}
