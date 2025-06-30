@@ -1,5 +1,5 @@
-import { getUser } from "@/lib/supabase/getUserServer";
-import { createClient } from "@/lib/supabase/serverClient";
+import { getUser } from "../../../lib/supabase/getUserServer";
+import { createClient } from "../../../lib/supabase/browserClient";
 import { redirect } from "next/navigation";
 
 export const getUserPresentations = async () => {

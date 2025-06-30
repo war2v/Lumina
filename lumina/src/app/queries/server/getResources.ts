@@ -1,4 +1,4 @@
-import { PresentationType } from "@/app/types";
+
 import { getUser } from "@/lib/supabase/getUserServer";
 import { createClient } from "@/lib/supabase/serverClient";
 import { redirect } from "next/navigation";

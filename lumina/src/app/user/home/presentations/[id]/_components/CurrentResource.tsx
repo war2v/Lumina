@@ -72,7 +72,11 @@ const CurrentResource = ({resources}: CurrentResourceProps) => {
               <ChevronLeft className="h-4 w-4 mr-1" /> Previous
             </Button>
             <p className="text-sm text-muted-foreground">
-              {currentIndex} of {resources.length}
+              {resources.length == 0 ?
+                currentIndex 
+                :
+                currentIndex + 1
+              } of {resources.length}
             </p>
             
             <Button

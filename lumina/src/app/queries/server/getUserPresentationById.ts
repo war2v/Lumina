@@ -30,7 +30,7 @@ export const getUserPresentationsById = async (id: string): Promise<Presentation
            created_at: created_at,
            created_by: created_by,
            description: description,
-           id: Number(id),
+           id: id,
            is_public: is_public,
            title: title,
        }

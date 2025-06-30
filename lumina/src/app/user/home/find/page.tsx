@@ -9,6 +9,7 @@ export default function SearchPage() {
   const [query, setQuery] = useState("");
   const [joinCode, setJoinCode] = useState("");
 
+
   return (
     <div className="max-w-5xl mx-auto p-6 space-y-6">
       {/* Search Bar and Join Code */}
