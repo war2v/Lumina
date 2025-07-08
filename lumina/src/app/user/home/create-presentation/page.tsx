@@ -1,4 +1,4 @@
-import CreatePresentationForm from "./_components/createPresentationForm";
+import CreatePresentationForm from "@/components/forms/createPresentationForm";
 
 const createPresentationPage = () => {
     return ( 

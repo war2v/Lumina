@@ -1,4 +1,4 @@
-import { getUser } from "@/lib/supabase/getUserServer";
+import { getUser } from "../../../lib/supabase/getUserServer";
 import { createClient } from "@/lib/supabase/serverClient";
 import { redirect } from "next/navigation";
 
@@ -13,8 +13,7 @@ export const getUserPresentations = async () => {
 
     let {data, error} = await supabase
         .from('presentations')
-        .select('*')
-        .eq('created_by', user.id);
+        .select('*');
     
     if (error) {
         throw new Error('Error Fetchin Data.')

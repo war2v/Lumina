@@ -2,6 +2,7 @@ export type PresentationType = {
     active: boolean;
     created_at: string;
     created_by: string;
+    created_by_username: string;
     description: string;
     id: string;
     is_public: boolean;

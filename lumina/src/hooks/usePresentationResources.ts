@@ -7,7 +7,7 @@ export async function getPresentationResources(presentationId: string) {
 
   const { data, error } = await supabase
     .from("presentation_resources")
-    .select("id, file_name, file_type, bucket_path")
+    .select("*")
     .eq("presentation_id", presentationId);
 
   if (error) throw new Error(error.message);

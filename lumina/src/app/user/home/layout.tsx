@@ -1,7 +1,7 @@
 // app/home/layout.tsx
 import type { ReactNode } from "react";
-import Sidebar from "./_components/sidebar";
-import Header from "./_components/header";
+import Sidebar from "@/components/custom/general/sidebar";
+import Header from "@/components/custom/general/header";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (

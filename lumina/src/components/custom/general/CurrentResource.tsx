@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import PdfViewer from "./PDFviewer";
+import PDFViewer from "./PDFviewer";
 
 interface CurrentResourceProps {
     resources: any[];
@@ -43,7 +43,7 @@ const CurrentResource = ({resources}: CurrentResourceProps) => {
             );
         case 'application/pdf':
             return (
-            <PdfViewer
+            <PDFViewer
                 url={process.env.NEXT_PUBLIC_SUPABASE_PRESENTATION_RESOURCES_URL + currentResource.file_path}
     
             />

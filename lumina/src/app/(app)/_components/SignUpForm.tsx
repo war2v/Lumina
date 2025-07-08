@@ -31,6 +31,13 @@ const SignUpForm = () => {
     const { error } = await supabase.auth.signUp({
       email: data.email,
       password: data.password,
+      options: {
+        data: { 
+          first_name: data.first_name,
+          last_name: data.last_name,
+          username: data.username,
+        }
+      }
     });
 
     if (error) {
@@ -54,12 +61,27 @@ const SignUpForm = () => {
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-y-3 px-10"
             >
+              <Input 
+                placeholder="Email" 
+                type="email" 
+                {...register("email")} 
+              />
+              <Input
+                placeholder="First Name"
+                type="text"
+                {...register("first_name")}
+              />
+              <Input
+                placeholder="Last Name"
+                type="text"
+                {...register("last_name")}
+              />
               <Input
                 placeholder="Username"
                 type="text"
                 {...register("username")}
               />
-              <Input placeholder="Email" type="email" {...register("email")} />
+              
               <Input
                 placeholder="Password"
                 type="password"

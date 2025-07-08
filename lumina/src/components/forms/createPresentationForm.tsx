@@ -14,7 +14,6 @@ import { Switch } from "@/components/ui/switch";
 import { redirect } from "next/navigation";
 import { PresentationSchema } from "@/schema/Schema";
 
-
 type PresentationFormData = z.infer<typeof PresentationSchema>;
 
 export default function CreatePresentationForm({
@@ -38,11 +37,11 @@ export default function CreatePresentationForm({
   const onSubmit = async (Formdata: PresentationFormData) => {
     setSubmitError("");
     const user = (await supabase.auth.getUser()).data.user;
+    let metadata = user?.user_metadata;
     if (!user) {
       setSubmitError("User not authenticated.");
       return;
     }
-
     const { data, error } = await supabase
       .from("presentations")
       .insert({
@@ -50,6 +49,7 @@ export default function CreatePresentationForm({
         description: Formdata.description,
         is_public: Formdata.isPublic,
         created_by: user.id,
+        created_by_username: metadata?.username,
         active: true,
       })
       .select();
@@ -57,7 +57,7 @@ export default function CreatePresentationForm({
     if (error) {
       setSubmitError(error.message);
     } else {
-      redirect(`/user/home/presentations/${data[0].id}`);
+      redirect(`/user/home/mypresentations/${data[0].id}`);
       //redirect(`user/home/presentation/${}`)
       if (onSuccess) {
       }

@@ -12,7 +12,7 @@ const navItems = [
   { label: "Create Presentation", icon: Monitor, href: `${url}/create-presentation`, },
   { label: "Find Presentation", icon: Search, href: `${url}/find` },
   { label: "My Notes", icon: FileText, href: `${url}/notes` },
-  { label: "My Presentations", icon: Grid2X2Plus, href: `${url}/presentations`}
+  { label: "My Presentations", icon: Grid2X2Plus, href: `${url}/mypresentations`}
 ];
 
 export default function Sidebar() {

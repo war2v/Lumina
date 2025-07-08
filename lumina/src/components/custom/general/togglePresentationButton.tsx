@@ -27,7 +27,7 @@ export default function TogglePresentationButton({
   };
 
   return (
-    <Button onClick={handleClick} disabled={isLoading} variant={isActive ? 'destructive' : 'default'}>
+    <Button size='sm' onClick={handleClick} disabled={isLoading} variant={isActive ? 'destructive' : 'default'}>
       {isLoading
         ? 'Processing...'
         : isActive
