@@ -12,13 +12,13 @@ import { getResourcesById } from '@/app/queries/server/getResources';
 export default async function PresentationPage({params}:{params: Promise<{id: string}>
 }) {
   const { id } = await params;
-  const {active, created_at, created_by, created_by_username, description, is_public, title, current_resource_id} = await getUserPresentationsById(id); 
-  const presentatation: PresentationType = {id, active, created_at, created_by, created_by_username, description, is_public, title, current_resource_id}
+  const {active, created_at, created_by, created_by_username, description, is_public, title, current_resource_id, invite_code} = await getUserPresentationsById(id); 
+  const presentatation: PresentationType = {id, active, created_at, created_by, created_by_username, description, is_public, title, current_resource_id, invite_code}
   const resources = await getResourcesById(id);
 
   const current_resource = current_resource_id;
   
-  console.log(active, created_at, created_by, created_by_username, description, is_public, title, current_resource_id)
+  console.log(invite_code)
 
   
 
@@ -39,7 +39,7 @@ export default async function PresentationPage({params}:{params: Promise<{id: st
       <AnalyticsCard />
 
       {/* Share Link */}
-      <ShareLink shareLink={`localhost:3000/user/home/presentations/${id}`}/>
+      <ShareLink shareLink={`localhost:3000/user/home/presentation/${id}?code=${presentatation.invite_code}`}/>
 
 
       {/* All Resources List */}

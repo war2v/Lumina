@@ -8,6 +8,7 @@ export type PresentationType = {
     is_public: boolean;
     title: string;
     current_resource_id: string;
+    invite_code: string;
 }
 
 export type PresentationResourceType = {
