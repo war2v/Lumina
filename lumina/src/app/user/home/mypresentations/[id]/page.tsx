@@ -12,12 +12,13 @@ import { getResourcesById } from '@/app/queries/server/getResources';
 export default async function PresentationPage({params}:{params: Promise<{id: string}>
 }) {
   const { id } = await params;
-  const {active, created_at, created_by, created_by_username, description, is_public, title} = await getUserPresentationsById(id); 
-  const presentatation: PresentationType = {id, active, created_at, created_by, created_by_username, description, is_public, title}
+  const {active, created_at, created_by, created_by_username, description, is_public, title, current_resource_id} = await getUserPresentationsById(id); 
+  const presentatation: PresentationType = {id, active, created_at, created_by, created_by_username, description, is_public, title, current_resource_id}
   const resources = await getResourcesById(id);
 
+  const current_resource = current_resource_id;
   
-  console.log(resources)
+  console.log(active, created_at, created_by, created_by_username, description, is_public, title, current_resource_id)
 
   
 
@@ -29,7 +30,7 @@ export default async function PresentationPage({params}:{params: Promise<{id: st
       <Header presentation={presentatation} />
       
       {/* Current Slide/Resource Preview */}
-      <CurrentResource resources={resources} />
+      <CurrentResource resources={resources} id={current_resource} projectId={id}/>
 
       {/* Description */}
       <Description description={description} />

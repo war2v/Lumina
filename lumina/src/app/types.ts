@@ -7,6 +7,7 @@ export type PresentationType = {
     id: string;
     is_public: boolean;
     title: string;
+    current_resource_id: string;
 }
 
 export type PresentationResourceType = {

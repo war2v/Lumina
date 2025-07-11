@@ -23,16 +23,18 @@ export const getUserPresentationsByIdClient = async (id: string): Promise<Presen
         throw new Error('Error Fetchin Data.')
     }
 
-    const {created_at, title, description, is_public, created_by, active } = data[0];
+    const {created_at, title, description, is_public, created_by, active, created_by_username, current_resource_id } = data[0];
 
     const presentation: PresentationType = {
         active: active,
         created_at: created_at,
         created_by: created_by,
+        created_by_username: created_by_username,
         description: description,
         id: id,
         is_public: is_public,
         title: title,
+        current_resource_id: current_resource_id
     }
     
     return presentation
