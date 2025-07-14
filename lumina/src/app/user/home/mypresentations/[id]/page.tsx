@@ -7,6 +7,7 @@ import ResourceList from '@/components/custom/general/ResourceList';
 import { getUserPresentationsById } from '@/app/queries/server/getUserPresentationById';
 import { PresentationType } from '@/app/types';
 import { getResourcesById } from '@/app/queries/server/getResources';
+import { QRJoinCode } from '@/components/custom/general/QRcode';
 
 
 export default async function PresentationPage({params}:{params: Promise<{id: string}>
@@ -28,9 +29,10 @@ export default async function PresentationPage({params}:{params: Promise<{id: st
     <div className="p-6 space-y-6 ">
       {/* Header */}
       <Header presentation={presentatation} />
+
       
       {/* Current Slide/Resource Preview */}
-      <CurrentResource resources={resources} id={current_resource} projectId={id}/>
+      <CurrentResource resources={resources} id={current_resource} projectId={id} joinCode={presentatation.invite_code}/>
 
       {/* Description */}
       <Description description={description} />

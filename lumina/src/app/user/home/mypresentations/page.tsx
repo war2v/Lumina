@@ -23,7 +23,7 @@ const MyPresentations = async () => {
     );
   }
   const grouped = Object.values(groupBy(presentations, "active"));
-  console.log(grouped[1]);
+  //console.log(grouped[1]);
 
   return (
     <div className="space-y-4">
@@ -67,14 +67,14 @@ const MyPresentations = async () => {
           </h1>
         </div>
 
-        <div className="flex flex-col justify-center items-center space-y-4">
+        <div className="flex flex-col justify-center items-center space-y-4 mt-4">
           {grouped[1]?.map((presentation: any) => (
             <Link
               key={presentation.id}
               className="w-full"
               href={`/user/home/mypresentations/${presentation.id}`}
             >
-              <Card className="my-5 border border-transparent hover:border-gray-400 transition">
+              <Card className="border border-transparent hover:border-gray-400 transition">
                 <CardHeader>
                   <CardTitle className="text-base">
                     {presentation.title}

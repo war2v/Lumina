@@ -8,18 +8,22 @@ import { useState } from "react";
 import PDFViewer from "./PDFviewer";
 import { setCurrentResource } from "@/app/actions/setCurrentResource";
 import { useRouter } from "next/navigation";
+import { renderResource } from "./renderResource";
+import { QRJoinCode } from "./QRcode";
 
 interface CurrentResourceProps {
   resources: any[];
   id: string;
   projectId: string;
+  joinCode: string;
 }
 const CurrentResource = ({
   resources,
   id,
   projectId,
+  joinCode,
 }: CurrentResourceProps) => {
-  if (!resources) {
+  if (!resources || resources.length===0) {
     return (
       <Card>
         <CardHeader>
@@ -55,73 +59,49 @@ const CurrentResource = ({
     router.refresh()
   };
 
-  const renderResource = () => {
-    if (currentResource) {
-      switch (currentResource.file_type) {
-        case "image/jpeg":
-          return (
-            <Image
-              src={
-                process.env.NEXT_PUBLIC_SUPABASE_PRESENTATION_RESOURCES_URL +
-                currentResource.file_path
-              }
-              alt={currentResource.file_name}
-              width={800}
-              height={600}
-              className="rounded border"
-            />
-          );
-        case "application/pdf":
-          return (
-            <PDFViewer
-              url={
-                process.env.NEXT_PUBLIC_SUPABASE_PRESENTATION_RESOURCES_URL +
-                currentResource.file_path
-              }
-            />
-          );
-        default:
-          return (
-            <p className="text-muted-foreground">
-              Cannot preview this file type.
-            </p>
-          );
-      }
-    }
-    return (
-      <p className="text-muted-foreground">Cannot preview this file type.</p>
-    );
-  };
+  
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Current Resource{id}</CardTitle>
+        <CardTitle>Current Resource</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4 items-center justify-center">
-        {renderResource()}
-        <div className="flex items-center justify-between w-full mt-4">
-          <Button
-            onClick={decrementCurrentResourceItem}
-            disabled={Number(id) === 0 || resources.length == 0}
-            variant="outline"
-          >
-            <ChevronLeft className="h-4 w-4 mr-1" /> Previous
-          </Button>
-          <p className="text-sm text-muted-foreground">
-            {resources.length == 0 ? Number(id) : Number(id) + 1} of{" "}
-            {resources.length}
-          </p>
+        <div className="w-full h-[600px] flex items-center justify-center bg-gray-100 rounded-md overflow-hidden relative">
+    {renderResource(currentResource)}
 
-          <Button
-            onClick={incrementCurrentResourceItem}
-            disabled={
-              Number(id) === resources.length - 1 || resources.length == 0
-            }
-            variant="outline"
-          >
-            Next <ChevronRight className="h-4 w-4 ml-1" />
-          </Button>
+    <div className="absolute top-4 right-4 bg-white p-2 rounded-md shadow-md z-10">
+      <QRJoinCode joinCode={joinCode} presentation_id={projectId} />
+    </div>
+    </div>
+        <div className="flex items-center justify-between w-full mt-4">
+          {resources.length > 0 ? (
+            <>
+              <Button
+                onClick={decrementCurrentResourceItem}
+                disabled={Number(id) === 0 || resources.length == 0}
+                variant="outline"
+              >
+                <ChevronLeft className="h-4 w-4 mr-1" /> Previous
+              </Button>
+              <p className="text-sm text-muted-foreground">
+                {resources.length == 0 ? Number(id) : Number(id) + 1} of{" "}
+                {resources.length}
+              </p>
+
+              <Button
+                onClick={incrementCurrentResourceItem}
+                disabled={
+                  Number(id) === resources.length - 1 || resources.length == 0
+                }
+                variant="outline"
+              >
+                Next <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            </>
+          ):
+          <></>
+          }
         </div>
       </CardContent>
     </Card>

@@ -15,7 +15,7 @@ const ViewerPresentationPage = async ({
   searchParams: { code?: string };
 }) => {
   const { id } = await params;
-  const providedCode = await searchParams.code;
+  const { code:providedCode } = await searchParams;
 
   if (!id) {
     redirect("/");

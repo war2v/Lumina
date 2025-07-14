@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useState } from "react";
 import PDFViewer from "./PDFviewer";
 import { useRealtimeCurrentResource } from "@/hooks/useRealtimeCurrentResource";
+import { renderResource } from "./renderResource";
 
 interface CurrentResourceProps {
     resources: any[];
@@ -31,66 +32,14 @@ const CurrentResourceViewer = ({resources, presentation_id, current_resource_id}
 
     const id = useRealtimeCurrentResource(presentation_id, current_resource_id)
 
-    console.log(id)
+    //console.log(id)
     const currentResource = resources[id]
-    const userCurrentResource = resources[localId]
 
-    const renderLocalResource = () => {
-      if(userCurrentResource) {
-        switch (userCurrentResource.file_type) {
-        case 'image/jpeg':
-            return (
-            <Image
-                src={process.env.NEXT_PUBLIC_SUPABASE_PRESENTATION_RESOURCES_URL + userCurrentResource.file_path}
-                alt={userCurrentResource.file_name}
-                width={800}
-                height={600}
-                className="rounded border"
-            />
-            );
-        case 'application/pdf':
-            return (
-            <PDFViewer
-                url={process.env.NEXT_PUBLIC_SUPABASE_PRESENTATION_RESOURCES_URL + userCurrentResource.file_path}
+
     
-            />
-            );
-        default:
-            return <p className="text-muted-foreground">Cannot preview this file type.</p>;
-        }
-      }
-      return <p className="text-muted-foreground">Cannot preview this file type.</p>;
-     
-    };
 
     //console.log(currentResource)
-    const renderResource = () => {
-      if(currentResource) {
-        switch (currentResource.file_type) {
-        case 'image/jpeg':
-            return (
-            <Image
-                src={process.env.NEXT_PUBLIC_SUPABASE_PRESENTATION_RESOURCES_URL + currentResource.file_path}
-                alt={currentResource.file_name}
-                width={800}
-                height={600}
-                className="rounded border"
-            />
-            );
-        case 'application/pdf':
-            return (
-            <PDFViewer
-                url={process.env.NEXT_PUBLIC_SUPABASE_PRESENTATION_RESOURCES_URL + currentResource.file_path}
     
-            />
-            );
-        default:
-            return <p className="text-muted-foreground">Cannot preview this file type.</p>;
-        }
-      }
-      return <p className="text-muted-foreground">Cannot preview this file type.</p>;
-     
-    };
 
     return ( 
         <Card>
@@ -98,7 +47,7 @@ const CurrentResourceViewer = ({resources, presentation_id, current_resource_id}
           <CardTitle>Current Resource</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4 items-center justify-center">
-          {renderResource()}
+          {renderResource(currentResource)}
           <div className="flex items-center justify-center w-full mt-4">
             
             <p className="text-sm text-muted-foreground">
