@@ -45,8 +45,8 @@ const ResourceList = ({resources}: ResourceListProps) => {
         <CardContent className="space-y-3">
           {
             resources.map((resource, index) => (
-            <div key={index} className="flex items-center justify-between p-3 rounded bg-muted">
-              <span>{resource.file_name}</span>
+            <div key={index} className="flex items-center justify-between p-3 rounded bg-muted dark:bg-black">
+              <span>{resource.file_name}</span> 
               <Button onClick={() => handleDownload(resource.file_path, resource.file_name)} variant="ghost" size="sm">
                 <Download className="h-4 w-4 mr-1" /> Download
               </Button>

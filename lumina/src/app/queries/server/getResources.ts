@@ -22,7 +22,7 @@ export const getResourcesById = async (presentation_id: string) => {
         throw new Error('Error Fetchin Data.')
     }
     
-    console.log(data);
+    //console.log(data);
    
        
     return data

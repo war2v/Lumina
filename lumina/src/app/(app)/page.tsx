@@ -4,9 +4,9 @@ import Footer from "./_components/Footer";
 import Hero from "./_components/Hero";
 import Problem from "./_components/Psol";
 
-export default async function Home() {
+export default function Home() {
   return (
-    <section className=" py-5 sm:py-16 lg:py-12">
+    <section className="pt-5 sm:pt-16 lg:pt-5 dark:bg-gradient-to-b dark:from-black dark:to-gray-950">
         <Hero />
         <Problem />
         <Features />

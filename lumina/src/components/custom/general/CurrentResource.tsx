@@ -23,7 +23,7 @@ const CurrentResource = ({
   projectId,
   joinCode,
 }: CurrentResourceProps) => {
-  if (!resources || resources.length===0) {
+  if (!resources || resources.length === 0) {
     return (
       <Card>
         <CardHeader>
@@ -39,7 +39,7 @@ const CurrentResource = ({
   const router = useRouter();
   const currentResource = resources[Number(id)];
 
-  console.log(id, resources.length);
+  //console.log(id, resources.length);
 
   const incrementCurrentResourceItem = () => {
     if (Number(id) === resources.length - 1) {
@@ -47,7 +47,7 @@ const CurrentResource = ({
     } else {
       setCurrentResource((Number(id) + 1).toString(), projectId);
     }
-    router.refresh()
+    router.refresh();
   };
 
   const decrementCurrentResourceItem = () => {
@@ -56,10 +56,8 @@ const CurrentResource = ({
     } else {
       setCurrentResource((Number(id) - 1).toString(), projectId);
     }
-    router.refresh()
+    router.refresh();
   };
-
-  
 
   return (
     <Card>
@@ -68,12 +66,12 @@ const CurrentResource = ({
       </CardHeader>
       <CardContent className="flex flex-col gap-4 items-center justify-center">
         <div className="w-full h-[600px] flex items-center justify-center bg-gray-100 rounded-md overflow-hidden relative">
-    {renderResource(currentResource)}
+          {renderResource(currentResource)}
 
-    <div className="absolute top-4 right-4 bg-white p-2 rounded-md shadow-md z-10">
-      <QRJoinCode joinCode={joinCode} presentation_id={projectId} />
-    </div>
-    </div>
+          <div className="absolute top-4 right-4 bg-white p-2 rounded-md shadow-md z-10">
+            <QRJoinCode joinCode={joinCode} presentation_id={projectId} />
+          </div>
+        </div>
         <div className="flex items-center justify-between w-full mt-4">
           {resources.length > 0 ? (
             <>
@@ -99,9 +97,9 @@ const CurrentResource = ({
                 Next <ChevronRight className="h-4 w-4 ml-1" />
               </Button>
             </>
-          ):
-          <></>
-          }
+          ) : (
+            <></>
+          )}
         </div>
       </CardContent>
     </Card>

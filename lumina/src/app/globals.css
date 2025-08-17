@@ -2,9 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+.ProseMirror:focus {
+  outline: none;
+}
+
+.ProseMirror h1 {
+  @apply text-4xl font-bold;
+}
+
+.ProseMirror h2 {
+  @apply text-3xl font-semibold;
+}
+
+.ProseMirror h3 {
+  @apply text-2xl font-semibold;
+}
+
+.ProseMirror h4 {
+  @apply text-xl font-medium;
+}
+
+.ProseMirror h5 {
+  @apply text-lg font-medium;
+}
+
+.ProseMirror h6 {
+  @apply text-base font-medium;
+}
+
 
 
 @layer base {
+
   :root {
 
     --background: 0 0% 100%;

@@ -5,7 +5,7 @@ import Header from "@/components/custom/general/header";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex h-screen overflow-hidden bg-muted">
+    <div className="flex h-screen overflow-hidden bg-muted dark:bg-gray-950">
       <Sidebar />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Header />

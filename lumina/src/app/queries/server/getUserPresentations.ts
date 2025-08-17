@@ -6,6 +6,7 @@ export const getUserPresentations = async () => {
     const supabase = await createClient();
 
     const { user }  = await getUser()
+    //console.log(user)
 
     if (!user){
         redirect("/sign-in")
@@ -13,11 +14,13 @@ export const getUserPresentations = async () => {
 
     let {data, error} = await supabase
         .from('presentations')
-        .select('*');
+        .select('*')
+        .eq('created_by', user.id);
     
     if (error) {
         throw new Error('Error Fetchin Data.')
     }
+    //console.log(data)
     
     return data;
     

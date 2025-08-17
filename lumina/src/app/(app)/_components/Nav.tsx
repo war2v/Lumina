@@ -4,16 +4,18 @@ import { getUser } from "@/lib/supabase/getUserServer";
 import Image from "next/image";
 import Link from "next/link";
 import Logout from "./logout";
+import { ThemeSelector } from "@/components/custom/general/ThemeSelector";
 
 const Nav = async () => {
   const { user } = await getUser();
 
   return (
-    <div className="p-4 flex bg-muted/50 ">
+    <div className="p-4 flex bg-muted/50 dark:bg-gray-950">
       <Link href="/" className="flex">
         <Image src="/logo.svg" alt="Logo" width={180} height={30} />
       </Link>
-      <div className="flex justify-end w-full gap-x-4">
+      <div className="flex justify-end items-center w-full gap-x-4">
+        <ThemeSelector/>
         {user===null ? (
           <>
             <Button variant="default" asChild>

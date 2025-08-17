@@ -16,10 +16,11 @@ export const getPresentationByIdClient = async (id: string): Promise<Presentatio
         throw new Error('Error Fetchin Data.')
     }
 
-    const {created_at, title, description, is_public, created_by, active, created_by_username, current_resource_ID } = data[0];
+    const {created_at, invite_code, title, description, is_public, created_by, active, created_by_username, current_resource_ID } = data[0];
 
     const presentation: PresentationType = {
         active: active,
+        invite_code: invite_code,
         created_at: created_at,
         created_by: created_by,
         created_by_username: created_by_username,

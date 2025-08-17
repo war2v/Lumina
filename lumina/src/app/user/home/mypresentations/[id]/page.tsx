@@ -1,51 +1,88 @@
-import AnalyticsCard from '@/components/custom/general/AnalyticsCard';
-import Header from '@/components/custom/general/ProjectHeader';
-import CurrentResource from '@/components/custom/general/CurrentResource';
-import Description from '@/components/custom/general/Description';
-import ShareLink from '@/components/custom/general/ShareLink';
-import ResourceList from '@/components/custom/general/ResourceList';
-import { getUserPresentationsById } from '@/app/queries/server/getUserPresentationById';
-import { PresentationType } from '@/app/types';
-import { getResourcesById } from '@/app/queries/server/getResources';
-import { QRJoinCode } from '@/components/custom/general/QRcode';
+import AnalyticsCard from "@/components/custom/general/AnalyticsCard";
+import Header from "@/components/custom/general/ProjectHeader";
+import CurrentResource from "@/components/custom/general/CurrentResource";
+import Description from "@/components/custom/general/Description";
+import ShareLink from "@/components/custom/general/ShareLink";
+import ResourceList from "@/components/custom/general/ResourceList";
+import { getUserPresentationsById } from "@/app/queries/server/getUserPresentationById";
+import { PresentationType } from "@/app/types";
+import { getResourcesById } from "@/app/queries/server/getResources";
 
-
-export default async function PresentationPage({params}:{params: Promise<{id: string}>
+export default async function PresentationPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const {active, created_at, created_by, created_by_username, description, is_public, title, current_resource_id, invite_code} = await getUserPresentationsById(id); 
-  const presentatation: PresentationType = {id, active, created_at, created_by, created_by_username, description, is_public, title, current_resource_id, invite_code}
+  const {
+    active,
+    created_at,
+    created_by,
+    created_by_username,
+    description,
+    is_public,
+    title,
+    current_resource_id,
+    invite_code,
+    tags,
+    start_datetime,
+    end_datetime,
+  } = await getUserPresentationsById(id);
+  const presentatation: PresentationType = {
+    id,
+    active,
+    created_at,
+    created_by,
+    created_by_username,
+    description,
+    is_public,
+    title,
+    current_resource_id,
+    invite_code,
+    tags,
+    start_datetime,
+    end_datetime,
+
+  };
   const resources = await getResourcesById(id);
 
   const current_resource = current_resource_id;
-  
-  console.log(invite_code)
 
-  
-
-  
+  console.log(new Date(presentatation.start_datetime).toDateString())
 
   return (
     <div className="p-6 space-y-6 ">
       {/* Header */}
       <Header presentation={presentatation} />
 
-      
       {/* Current Slide/Resource Preview */}
-      <CurrentResource resources={resources} id={current_resource} projectId={id} joinCode={presentatation.invite_code}/>
+      <CurrentResource
+        resources={resources}
+        id={current_resource}
+        projectId={id}
+        joinCode={presentatation.invite_code}
+      />
 
-      {/* Description */}
-      <Description description={description} />
+      <div className="flex justify-evenly w-full gap-x-2">
+        {/* Description */}
+        <Description description={description} tags={tags} date={start_datetime}/>
+
+        {/* Share Link */}
+        <ShareLink
+          shareLink={`${presentatation.invite_code}`}
+          id={id}
+        />
+
+      </div>
+      
 
       {/* Analytics */}
       <AnalyticsCard />
 
-      {/* Share Link */}
-      <ShareLink shareLink={`localhost:3000/user/home/presentation/${id}?code=${presentatation.invite_code}`}/>
-
+      
 
       {/* All Resources List */}
-      <ResourceList resources={resources}/>
+      <ResourceList resources={resources} />
     </div>
   );
 }

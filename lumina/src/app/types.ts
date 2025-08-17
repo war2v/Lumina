@@ -9,6 +9,9 @@ export type PresentationType = {
     title: string;
     current_resource_id: string;
     invite_code: string;
+    tags: string;
+    start_datetime: Date;
+    end_datetime: Date;
 }
 
 export type PresentationResourceType = {
@@ -20,4 +23,15 @@ export type PresentationResourceType = {
     file_type: string,
     file_size: string | null,
     uploaded_by: string
+}
+
+export interface ApiResponse<T> {
+    success: boolean;
+    data?: T;
+    error?: string;
+    message?: string;
+}
+
+export interface note{
+    id: string;
 }

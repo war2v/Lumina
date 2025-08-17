@@ -1,6 +1,6 @@
 import { PresentationType } from "@/app/types";
 import { createClient } from "@/lib/supabase/serverClient";
-import { Presentation } from "lucide-react";
+import { Presentation, Tags } from "lucide-react";
 
 
 export const getPresentationById = async (id: string): Promise<PresentationType> => {
@@ -13,7 +13,7 @@ export const getPresentationById = async (id: string): Promise<PresentationType>
         .eq('id', id);
     
     if (error) {
-        throw new Error('Error Fetchin Data.')
+        throw new Error(error.message)
     }
     if (!data){
         return <PresentationType>{
@@ -29,7 +29,7 @@ export const getPresentationById = async (id: string): Promise<PresentationType>
             }
     }
     
-    const {created_at, current_resource_id, invite_code, title, description, is_public, created_by, created_by_username, active } = data[0];
+    const {created_at, tags, start_datetime, end_datetime, current_resource_id, invite_code, title, description, is_public, created_by, created_by_username, active } = data[0];
    
        const presentation: PresentationType = {
            active: active,
@@ -41,7 +41,11 @@ export const getPresentationById = async (id: string): Promise<PresentationType>
            is_public: is_public,
            title: title,
            invite_code: invite_code,
-           current_resource_id: current_resource_id
+           tags: tags,
+           current_resource_id: current_resource_id,
+           start_datetime: new Date(start_datetime),
+           end_datetime: new Date(end_datetime),
+
        }
        
        return presentation

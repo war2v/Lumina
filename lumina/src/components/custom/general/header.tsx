@@ -12,6 +12,7 @@ import {
 import { useLogout } from '@/hooks/useLogout';
 
 import { useRouter } from 'next/navigation';
+import { ThemeSelector } from './ThemeSelector';
 
 export default function Header() {
   const router = useRouter();
@@ -19,9 +20,10 @@ export default function Header() {
   
 
   return (
-    <header className="flex items-center justify-between border-b bg-white px-6 py-4">
+    <header className="flex items-center justify-between border-b bg-white dark:bg-gray-950 px-6 py-4">
       <h1 className="text-xl font-semibold">Dashboard</h1>
       <div className="flex items-center gap-4">
+        <ThemeSelector />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="cursor-pointer">

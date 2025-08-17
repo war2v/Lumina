@@ -6,19 +6,20 @@ import { LinkIcon } from "lucide-react";
 import { useState } from "react";
 
 interface ShareLinkProps {
-    shareLink: string
+    shareLink: string,
+    id: string,
 }
 
-const ShareLink = ({shareLink}: ShareLinkProps) => {
+const ShareLink = ({shareLink, id}: ShareLinkProps) => {
     const [copied, setCopied] = useState(false);
 
     const handleCopy = () => {
-        navigator.clipboard.writeText(shareLink);
+        navigator.clipboard.writeText(`localhost:3000/user/home/presentation/${id}?code=${shareLink}`);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
     return ( 
-        <Card>
+      <Card className="w-full">
         <CardHeader>
           <CardTitle>Audience Link</CardTitle>
         </CardHeader>

@@ -14,9 +14,10 @@ interface HeaderProps {
 
 const Header = ({ presentation }: HeaderProps) => {
   const [open, setOpen] = useState(false);
+  console.log(presentation)
   return (
     <div className="flex items-center justify-between">
-      <h1 className="text-2xl font-bold">{presentation.title}</h1>
+      <h1 className="text-2xl text-muted-foreground font-bold">{presentation.title}</h1>
       <div className="flex gap-2">
         <Button size="sm" variant={"outline"} onClick={() => setOpen(true)}>
           <Pencil />
@@ -33,6 +34,7 @@ const Header = ({ presentation }: HeaderProps) => {
           initialData={{
             title: presentation.title,
             description: presentation.description,
+            tags: presentation.tags,
           }}
         />
         <TogglePresentationButton

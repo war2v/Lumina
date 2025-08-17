@@ -1,4 +1,7 @@
 import { getUserPresentations } from "@/app/queries/server/getUserPresentations";
+import { Container } from "@/components/custom/general/Contatiner";
+import MyPresentationList from "@/components/custom/general/MyPresentationList";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 
@@ -23,76 +26,45 @@ const MyPresentations = async () => {
     );
   }
   const grouped = Object.values(groupBy(presentations, "active"));
-  //console.log(grouped[1]);
+  const groupedP = Object.values(groupBy(presentations, "is_public"));
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-2xl font-bold text-gray-700">My Presentations</h1>
-
+    <Container>
+      
       <div>
         <div>
-          <div className="border-b py-4">
-            <h1 className="text-xl font-semibold text-muted-foreground">
-              Active Presentations
-            </h1>
+          <div className="border-b pb-2">
+            <h1 className="text-2xl text-red-300">Presentations</h1>
+
+            <Badge className="font-semibold text-muted-foreground">
+              Active
+            </Badge>
           </div>
-          <div className="flex flex-col justify-center items-center mt-4 space-y-4">
-            {grouped[0]?.map((presentation: any) => (
-              <Link
-                className="w-full"
-                key={presentation.id}
-                href={`/user/home/mypresentations/${presentation.id}`}
-              >
-                <Card className="w-full overflow-hidden border border-transparent hover:border-gray-400 transition">
-                  <CardHeader>
-                    <CardTitle className="text-base">
-                      {presentation.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-sm text-muted-foreground">
-                    <div className="">
-                      <div className="flex items-center gap-x-3 overflow-hidden">
-                        <p>{presentation.description}</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+          <div className="w-full flex items-start gap-x-4">
+            <div className="w-1/2 flex flex-col justify-center items-center">
+              <h1 className="text-green-400 py-5 text-xl">Public</h1>
+              <MyPresentationList presentations={groupedP[1]}  />
+              
+            </div>
+            <div className="w-1/2 flex flex-col justify-center items-center">
+              <h1 className="text-red-300 py-5 text-xl">Private</h1>
+              <MyPresentationList presentations={groupedP[0]} />
+            </div>
           </div>
         </div>
-        <div className="border-b py-4">
-          <h1 className="text-xl font-semibold text-muted-foreground">
-            Completed Presentations
-          </h1>
+        <div>
+          <div className="border-b py-4">
+            <Badge className="font-semibold text-muted-foreground">
+              Inactive
+            </Badge>
+          </div>
+          <div className="w-full flex flex-col justify-center items-center mt-4 space-y-4 ">
+            <MyPresentationList presentations={grouped[1]} />
+          </div>
         </div>
 
-        <div className="flex flex-col justify-center items-center space-y-4 mt-4">
-          {grouped[1]?.map((presentation: any) => (
-            <Link
-              key={presentation.id}
-              className="w-full"
-              href={`/user/home/mypresentations/${presentation.id}`}
-            >
-              <Card className="border border-transparent hover:border-gray-400 transition">
-                <CardHeader>
-                  <CardTitle className="text-base">
-                    {presentation.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="text-sm text-muted-foreground">
-                  <div className="">
-                    <div className="flex items-center gap-x-3">
-                      <p>{presentation.description}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
-        </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

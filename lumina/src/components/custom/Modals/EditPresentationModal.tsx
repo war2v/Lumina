@@ -19,6 +19,7 @@ const schema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().optional(),
   files: z.any().optional(),
+  tags: z.string().optional(),
 });
 
 type EditPresentationFormData = z.infer<typeof schema>;
@@ -39,7 +40,7 @@ export default function EditPresentationModal({
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  initialData: { title: string; description?: string };
+  initialData: { title: string; description?: string, tags?: string };
   presentationId: string;
   initialResources?: Resource[];
 }) {
@@ -58,6 +59,7 @@ export default function EditPresentationModal({
     defaultValues: {
       title: initialData.title,
       description: initialData.description || "",
+      tags: initialData.tags
     },
   });
 
@@ -69,6 +71,7 @@ export default function EditPresentationModal({
         .update({
           title: data.title,
           description: data.description,
+          tags: data.tags,
         })
         .eq("id", presentationId);
 
@@ -127,6 +130,11 @@ export default function EditPresentationModal({
         <div>
           <Label htmlFor="description">Description</Label>
           <Textarea id="description" {...register("description")} />
+        </div>
+
+        <div>
+          <Label className="text-muted-foreground" htmlFor="tags">Tags</Label>
+          <Textarea id="tags" {...register("tags")} />
         </div>
 
         <div>
