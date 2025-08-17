@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Here’s a polished README.md template for your Lumina GitHub repository that matches your tech stack from package.json and includes a section for screenshots:
 
-## Getting Started
+🌟 Lumina
 
-First, run the development server:
+Lumina is a modern web application that enables presenters to share resources seamlessly while allowing audiences to take private, structured notes. Designed for simplicity, speed, and scalability, Lumina empowers knowledge sharing in classrooms, conferences, and professional presentations.
 
-```bash
+🚀 Features
+
+📂 Presentation Dashboard – Manage presentations and uploaded resources.
+
+📝 Private Audience Notes – Attendees can take and organize their own notes securely.
+
+🔒 Firebase Authentication – Secure login and user management.
+
+☁️ Cloud Storage – Upload and access presentation resources via AWS S3.
+
+🎨 Rich Text Editing – Enhanced note-taking experience powered by TipTap editor.
+
+📱 Responsive UI – Built with Next.js 14 + TailwindCSS for seamless desktop and mobile support.
+
+🛠️ Tech Stack
+
+Frontend: Next.js 14 + React
+
+Styling: Tailwind CSS + ShadCN UI
+
+Database & Auth: Firebase
+
+Storage: AWS S3
+
+Rich Text Editor: TipTap
+
+📸 Screenshots
+
+Add your screenshots here to showcase the app UI.
+
+Example layout:
+
+Presenter Dashboard
+
+Audience Note-Taking
+
+
+
+
+
+⚡ Installation
+
+Clone the repository and install dependencies:
+
+git clone https://github.com/your-username/lumina.git
+cd lumina
+npm install
+
+▶️ Running the App
+
+Start the development server:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will be running on http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+🔑 Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a .env.local file in the root directory with the following:
 
-## Learn More
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 
-To learn more about Next.js, take a look at the following resources:
+AWS_ACCESS_KEY_ID=your_access_key
+AWS_SECRET_ACCESS_KEY=your_secret_key
+AWS_S3_BUCKET=your_bucket_name
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+📜 Roadmap
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+🤝 Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Contributions are welcome! Please fork this repo, create a feature branch, and submit a PR.
+
+📄 License
+
+This project is licensed under the MIT License.
+
+Do you want me to also generate placeholder screenshots (clean mock UI shots) so you can drop them into the repo until you have real ones?
