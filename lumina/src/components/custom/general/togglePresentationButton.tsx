@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { togglePresentationActive } from '@/app/actions/toggleActivePresentation';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { togglePresentationActive } from "@/lib/actions/toggleActivePresentation";
 
 export default function TogglePresentationButton({
   initialState,
@@ -20,19 +20,25 @@ export default function TogglePresentationButton({
       const newState = await togglePresentationActive(presentationId, isActive);
       setIsActive(newState);
     } catch (err) {
-      console.error('Failed to toggle active state:', err);
+      console.error("Failed to toggle active state:", err);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <Button size='sm' onClick={handleClick} disabled={isLoading} variant={isActive ? 'destructive' : 'default'}>
+    <Button
+      size="sm"
+      onClick={handleClick}
+      disabled={isLoading}
+      className={isActive  ? "bg-green-400 hover:bg-green-300" : ""}
+      variant={isActive ? "default" : "destructive"}
+    >
       {isLoading
-        ? 'Processing...'
+        ? "Processing..."
         : isActive
-        ? 'End Presentation'
-        : 'Activate Presentation'}
+        ? "Active"
+        : "Inactive"}
     </Button>
   );
 }

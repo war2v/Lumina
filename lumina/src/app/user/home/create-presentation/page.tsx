@@ -4,9 +4,9 @@ import { Badge } from "@/components/ui/badge";
 
 const createPresentationPage = () => {
     return ( 
-        <Container className="flex flex-col">
-            <div className="text-2xl text-red-300">Create Presentation</div>
-            <div className="flex justify-center">
+        <Container className="flex flex-col p-4">
+        
+            <div className="flex justify-start p-2">
                 <Badge>
                     <h1 className="text-muted-foreground font-semibold">Create</h1>
                 </Badge>

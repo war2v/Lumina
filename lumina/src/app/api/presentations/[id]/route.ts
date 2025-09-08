@@ -43,7 +43,7 @@ export async function PUT(
     const { id } = params;
     const body = await request.json();
 
-    console.log(body)
+    //console.log(body)
 
     const { data, error } = await supabase
         .from('presentations')
@@ -66,14 +66,17 @@ export async function DELETE(
     { params }: Params
     ): Promise<Response>
 {
+    //console.log("here")
     const supabase = await createClient()
-    const { id } =  params;
+    const { id } =  await params;
 
     const {error} = await supabase
         .from('presentations')
         .delete()
         .eq('id', id)
     
+
+
     const response: ApiResponse<null> = error
         ? { success: false, error: error.message }
         : { success: true, message: "Presentation Deleted"}

@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import Footer from "./_components/Footer";
 import Nav from "./_components/Nav";
-import "./landingpage.css"
+
 
 export default function LandingPageLayout({
   children,
@@ -9,7 +9,7 @@ export default function LandingPageLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <div className="background-container">
         <Nav />
         {children}
         <Footer />

@@ -40,7 +40,7 @@ const Features = () => {
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               What Makes Flare Notes Different
             </h2>
-            <p className="mt-2 text-gray-600 dark:text-gray-400">
+            <p className="mt-2 ">
               Designed to keep presenters focused and audiences engaged.
             </p>
           </div>
@@ -49,10 +49,10 @@ const Features = () => {
               <Card key={index} className="hover:shadow-md transition-shadow duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-3 mb-3">
-                    <CheckCircle className="text-red-500 mt-1" size={20} />
+                    <CheckCircle className="text-destructive mt-1" size={20} />
                     <h3 className="text-xl font-semibold">{feature.title}</h3>
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm ">
                     {feature.description}
                   </p>
                 </CardContent>

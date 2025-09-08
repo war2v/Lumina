@@ -1,6 +1,6 @@
 # 🌟 Lumina
 
-**Lumina** is a real‑time presentation + resource sharing platform. Presenters upload decks and supporting files, share a link/QR, and attendees follow along while taking **private notes**—without missing key moments.
+**Lumina** is a real‑time presentation + resource sharing + note taking platform. Presenters upload decks and supporting files, share a link/QR, and attendees follow along while taking **private notes**—without missing key moments.
 
 ---
 

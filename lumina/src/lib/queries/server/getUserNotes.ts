@@ -2,6 +2,7 @@ import { PresentationType } from "@/app/types";
 import { getUser } from "@/lib/supabase/getUserServer";
 import { createClient } from "@/lib/supabase/serverClient";
 import { redirect } from "next/navigation";
+import { toast } from "sonner";
 
 
 export const getUserNotes = async (): Promise<any> => {
@@ -30,10 +31,9 @@ export const getUserNotes = async (): Promise<any> => {
         .eq('user_id', user.id);
     
     if (error || !data) {
-        throw new Error('Error Fetchin Data.')
+        console.log(error?.message)
+        return []
     }
-
-    //console.log(data) 
     
     return data
    

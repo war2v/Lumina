@@ -10,7 +10,7 @@ const Nav = async () => {
   const { user } = await getUser();
 
   return (
-    <div className="p-4 flex bg-muted/50 dark:bg-gray-950">
+    <div className="p-4 flex">
       <Link href="/" className="flex">
         <Image src="/logo.svg" alt="Logo" width={180} height={30} />
       </Link>

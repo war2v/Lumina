@@ -1,9 +1,8 @@
 "use client";
-import { getPresentationByJoinCodeClient } from "@/app/queries/client/getPresentationByJoinCodeClient";
+import { getPresentationByJoinCodeClient } from "@/lib/queries/client/getPresentationByJoinCodeClient";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { error } from "console";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 
 interface SearchBarProps {
@@ -17,7 +16,7 @@ const SearchBar = ({ query, onChange }: SearchBarProps) => {
   const tryJoin = async () => {
     const presentation = await getPresentationByJoinCodeClient(joinCode);
     if (presentation === "") {
-      //console.log("No Presentation")
+      ////console.log("No Presentation")
       return;
     }
 

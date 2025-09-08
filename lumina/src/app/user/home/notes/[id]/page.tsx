@@ -1,12 +1,13 @@
 import NoteEditor from "@/components/custom/general/NoteEditor"
-import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor"
 
 
 
-export default function NotePage () {
+export default async function NotePage ({params}:{params: Promise<{ id: string }>}) {
+
+    const {id} = await params;
     return (
         <div className="h-full">
-            <NoteEditor />
+            <NoteEditor noteId={id}  className="h-full" editorClassName="h-full"/>
         </div>
     )
 }

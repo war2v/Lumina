@@ -9,12 +9,12 @@ import {
 
 export default function AnalyticsCard() {
   return (
-    <Card className="w-full">
+    <Card className="w-full h-full">
       <CardHeader>
         <CardTitle>Analytics</CardTitle>
       </CardHeader>
 
-      <CardContent className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm text-muted-foreground mb-6">
+      <CardContent className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm text-muted-foreground">
         <div>
           <strong className="text-lg text-foreground block">5</strong>
           Live Viewers
@@ -36,7 +36,7 @@ export default function AnalyticsCard() {
       </CardContent>
 
       <CardContent>
-        <h4 className="text-sm font-semibold text-foreground mb-2">
+        <h4 className="text-sm font-semibold text-foreground">
           Current Viewers
         </h4>
         <ul className="space-y-2 text-sm text-muted-foreground">

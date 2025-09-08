@@ -36,7 +36,7 @@ const SignInForm = () => {
     });
 
     if (error) {
-      console.log(error?.message);
+      //console.log(error?.message);
       toast(error.message);
     } else {
       router.push("/user/home");

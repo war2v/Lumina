@@ -1,62 +1,58 @@
-import { redirect, useParams } from "next/navigation";
-import { getPresentationById } from "@/app/queries/server/getPresentationById";
-import { getPresentationResources } from "@/hooks/usePresentationResources";
-import CurrentResource from "@/components/custom/general/CurrentResource";
+import { redirect } from "next/navigation";
+import { getPresentationById } from "@/lib/queries/server/getPresentationById";
 import ResourceList from "@/components/custom/general/ResourceList";
-import CurrentResourceViewer from "@/components/custom/general/CurrentResourceViewer";
-import { getCurrentResourceId } from "@/app/queries/server/getCurrentResourceId";
-import CurrentLocalResource from "@/components/custom/general/CurrentLocalResource";
-import { ensureUserNote } from "@/app/queries/server/ensureUserNote";
+import { getCurrentResourceId } from "@/lib/queries/server/getCurrentResourceId";
+import { ensureUserNote } from "@/lib/queries/server/ensureUserNote";
 import NoteEditor from "@/components/custom/general/NoteEditor";
-import { handleSave } from "@/app/actions/handleNoteSave";
-import { createClient } from "@/lib/supabase/serverClient";
+import { getResourcesById } from "@/lib/queries/server/getResources";
+import { Container } from "@/components/custom/general/Contatiner";
+import { AttendeeSwitcher } from "@/components/custom/general/AttendeeSwitcher";
 
-const ViewerPresentationPage = async ({ params, searchParams}: { params: Promise<{ id: string }>; searchParams: { code?: string };}) => {
+const ViewerPresentationPage = async ({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: { code?: string };
+}) => {
   const { id } = await params;
-  const { code:providedCode } = await searchParams;
-
-  
+  const { code: providedCode } = await searchParams;
 
   const presentation = await getPresentationById(id.toString());
-  const resources = await getPresentationResources(id.toString());
+  const resources = await getResourcesById(id.toString());
   const current_resource_id = await getCurrentResourceId(id);
   const userNote = await ensureUserNote(id);
-  console.log();
-  
+  //console.log();
+
   if (
     !presentation.active ||
     (!presentation.is_public && presentation.invite_code !== providedCode)
   ) {
-    //console.log("unauthorized");
+    ////console.log("unauthorized");
     redirect("/");
   }
 
   return (
-    <div className="flex flex-col gap-y-4">
-      <div className="flex flex-col justify-between py-5 px-3 text-muted-foreground font-semibold">
+    <Container className="gap-y-4 p-4 w-full">
+      <div className="flex flex-col justify-between  px-3 text-muted-foreground font-semibold">
         <h1 className="text-2xl dark:text-white">{presentation.title}</h1>
         <h1 className="text-sm">{presentation.created_by_username}</h1>
         <h1 className="text-sm">{presentation.description}</h1>
       </div>
-      <div className="grid lg:grid-cols-2 gap-x-4">
-        
-        <CurrentResourceViewer
-        title="Presenter"
-        resources={resources}
-        current_resource_id={current_resource_id}
-        presentation_id={presentation.id}
-        />
-        <CurrentLocalResource
-          title="User"
-          resources={resources}
-          current_resource_id={current_resource_id}
-          presentation_id={presentation.id}
-        />
-      </div>
-      <NoteEditor initialValue={userNote.content}  />
-      <ResourceList resources={resources} />
-      
-    </div>
+      <div className="grid grid-cols-2 gap-4 h-full w-full">
+          
+          <div className="h-[730px] w-full">
+            <NoteEditor className="h-full" initialValue={userNote.content} />
+          </div>
+          <div className="grid h-[600px] lg:grid-cols-1  gap-x-4 md:gap-y-4">
+            <AttendeeSwitcher r_className="h-[600px]" resources={resources} id={current_resource_id} projectId={presentation.id} />
+          </div>
+          
+        </div>
+        <div className="w-full py-4">
+            <ResourceList className="w-full" resources={resources} />
+          </div>
+    </Container>
   );
 };
 

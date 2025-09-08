@@ -1,32 +1,28 @@
-
-import { getUser } from "@/lib/supabase/getUserServer";
+import { getUser } from "../../supabase/getUserServer";
 import { createClient } from "@/lib/supabase/serverClient";
 import { redirect } from "next/navigation";
 
-
-export const getResourcesById = async (presentation_id: string) => {
+export const getUserPresentations = async () => {
     const supabase = await createClient();
 
     const { user }  = await getUser()
+    ////console.log(user)
 
     if (!user){
         redirect("/sign-in")
     }
 
     let {data, error} = await supabase
-        .from('presentation_resources')
+        .from('presentations')
         .select('*')
-        .eq('presentation_id', presentation_id);
+        .eq('created_by', user.id);
     
-    if (error || !data) {
+    if (error) {
         throw new Error('Error Fetchin Data.')
     }
+    ////console.log(data)
     
-    //console.log(data);
-   
-       
-    return data
-   
+    return data;
     
 
     

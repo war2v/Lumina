@@ -40,9 +40,9 @@ const SignUpForm = () => {
     });
 
     if (error) {
-      //console.log(error.message);
+      ////console.log(error.message);
     } else {
-      //console.log("Success");
+      ////console.log("Success");
       router.push("/sign-in");
     }
   };

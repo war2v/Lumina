@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/browserClient";
 import { useState } from "react";
-import { Upload } from "lucide-react";
+import {  Upload } from "lucide-react";
 import BaseModal from "./BaseModal";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
@@ -36,19 +36,17 @@ export default function EditPresentationModal({
   onOpenChange,
   initialData,
   presentationId,
-  initialResources = [],
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   initialData: { title: string; description?: string, tags?: string };
   presentationId: string;
-  initialResources?: Resource[];
 }) {
   const {user, loading} = useUser();
   const router = useRouter();
   const supabase = createClient();
   const [message, setMessage] = useState("");
-  const [resources, setResources] = useState<Resource[]>(initialResources);
+  const [resources, setResources] = useState<FileList | null>();
 
   const {
     register,
@@ -78,10 +76,10 @@ export default function EditPresentationModal({
       if (updateError) throw updateError;
 
       if (data.files?.length > 0) {
-        const uploadedResources: Resource[] = [];
+        const uploadedResources: FileList[] = [];
 
         for (const file of data.files) {
-          const filePath = `${presentationId}/${Date.now()}-${file.name}`;
+          const filePath = `${user?.id}/${Date.now()}-${file.name}`;
 
           const { error: uploadError } = await supabase.storage
             .from("presentation-resources")
@@ -90,11 +88,12 @@ export default function EditPresentationModal({
           if (uploadError) throw uploadError;
 
           if (!user){ throw new Error("User Not Signed In") }
+
+          
           
           const { data: inserted, error: insertError } = await supabase
             .from("presentation_resources")
             .insert({
-              presentation_id: presentationId,
               file_name: file.name,
               file_type: file.type,
               file_path: filePath,
@@ -104,8 +103,15 @@ export default function EditPresentationModal({
             .single();
           if (insertError) throw insertError;
           if (inserted) uploadedResources.push(inserted); 
+          const { data, error } = await supabase
+            .from("resource_associations")
+            .insert({
+              "presentation_id": presentationId,
+              "resource_id": inserted.id,
+            })
+          
         }
-        setResources((prev) => [...prev, ...uploadedResources]);
+        
       }
 
       setMessage("Changes saved.");
@@ -145,22 +151,22 @@ export default function EditPresentationModal({
             multiple
             accept=".pptx,.pdf,.docx,.png,.jpg,.jpeg"
             {...register("files")}
+            onChange={(e) => setResources(e.target.files)}
           />
           <p className="text-xs text-muted-foreground mt-1">
             Supported: PPTX, PDF, DOCX, PNG, JPG
           </p>
         </div>
 
-        {resources.length > 0 && (
+       
           <div className="space-y-1">
             <Label className="font-semibold">Current Resources</Label>
-            <ul className="text-sm list-disc list-inside text-muted-foreground">
-              {resources.map((res) => (
-                <li key={res.id}>{res.file_name}</li>
-              ))}
-            </ul>
+            <div>
+              <h3 className="text-sm text-muted-foreground">{resources?.length} Files Selected</h3>
+              
+            </div>
           </div>
-        )}
+        
 
         <div className="flex justify-end gap-2">
           <Button

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -8,33 +8,55 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuLabel,
-} from '@/components/ui/dropdown-menu';
-import { useLogout } from '@/hooks/useLogout';
+} from "@/components/ui/dropdown-menu";
+import { useLogout } from "@/hooks/useLogout";
 
-import { useRouter } from 'next/navigation';
-import { ThemeSelector } from './ThemeSelector';
+import { useRouter } from "next/navigation";
+import { ThemeSelector } from "./ThemeSelector";
+import Image from "next/image";
+import { Account } from "@/lib/queries/server/getAccount";
 
-export default function Header() {
+interface Props {
+  account: Account | null;
+  title?: string;
+}
+
+export default function Header({ account , title = "Dashboard"}: Props) {
   const router = useRouter();
   const logout = useLogout();
-  
+  //console.log(account);
 
   return (
-    <header className="flex items-center justify-between border-b bg-white dark:bg-gray-950 px-6 py-4">
-      <h1 className="text-xl font-semibold">Dashboard</h1>
+    <header className="flex items-center justify-between border-b px-6 py-4">
+      <h1 className="text-xl font-semibold">{title}</h1>
       <div className="flex items-center gap-4">
+       
         <ThemeSelector />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="cursor-pointer">
-              <AvatarFallback>U</AvatarFallback>
+              {account ? (
+                <Image
+                  width={60}
+                  height={50}
+                  alt="U"
+                  src={
+                    account.profile_image_url
+                      ? process.env.NEXT_PUBLIC_SUPABASE_PROFILE_PICTURE_URL +
+                        account.profile_image_url
+                      : "/globe.svg"
+                  }
+                />
+              ) : (
+                <AvatarFallback>U</AvatarFallback>
+              )}
             </Avatar>
           </DropdownMenuTrigger>
 
           <DropdownMenuContent className="w-48" align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => router.push('/user/settings')}>
+            <DropdownMenuItem onClick={() => router.push("/user/settings")}>
               Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />

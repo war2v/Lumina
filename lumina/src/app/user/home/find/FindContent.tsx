@@ -16,10 +16,13 @@ export const FindContent = ({ presentations }: FindContentProps) => {
     )
 
     return (
-    <Container>
+    <Container className="p-4">
         <div className="text-2xl text-red-300">Find</div>
         <SearchBar query={query} onChange={setQuery} />
-        <PresentationList presentations={filtered} />
+        <div className="h-full overflow-scroll">
+            <PresentationList presentations={filtered} className="h-full max-h-[1000px]"/>
+        </div>
+        
       
     </Container>
     )

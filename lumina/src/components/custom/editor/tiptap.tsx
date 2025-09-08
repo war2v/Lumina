@@ -15,7 +15,7 @@ import {
 } from "@tiptap/extension-text-style";
 import { Underline as UL } from "@tiptap/extension-underline";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Selection, UndoRedo } from "@tiptap/extensions";
 import {
   AlignCenter,
@@ -34,7 +34,6 @@ import {
   Heading6,
   Highlighter,
   ItalicIcon,
-  Menu,
   Strikethrough,
   Underline,
 } from "lucide-react";
@@ -45,14 +44,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useEditorState } from "@tiptap/react";
 import Heading from "@tiptap/extension-heading";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import Strike from "@tiptap/extension-strike";
 import TextAlign from "@tiptap/extension-text-align";
 import Code from "@tiptap/extension-code";
+import { createClient } from "@/lib/supabase/browserClient";
+import { toast } from "sonner";
 
 interface TipTapProps {
   className?: string;
+  editorClassName?: string;
+  noteId? : string;
 }
 
 const fonts = [
@@ -94,11 +96,13 @@ const bgColor = [
   "#958DF1",
 ];
 
-export const TipTap = ({ className }: TipTapProps) => {
+export const TipTap = ({ className, editorClassName, noteId }: TipTapProps) => {
   const [bold, toggleBold] = useState(false);
   const [italic, toggleItalic] = useState(false);
   const [underline, toggleUnderline] = useState(false);
   const [strike, toggleStrike] = useState(false);
+  const [menuCollasped, setMenuCollapsed] = useState<boolean>(false);
+
 
   const editor = useEditor({
     extensions: [
@@ -129,7 +133,27 @@ export const TipTap = ({ className }: TipTapProps) => {
     ],
     content: "<p>Your Notes Go Here!</p>",
     immediatelyRender: false,
-  });
+  })
+
+  const onSave = async () => {
+    const json = editor?.getJSON()
+    
+    const supabase = createClient();
+
+    const {data, error} = await supabase
+      .from('notes')
+      .update({'content': json})
+      .eq('id', noteId)
+      .select()
+
+    if(error){
+      toast(error.message)
+    } else {
+      toast("Note Saved")
+    }
+  }
+
+
   const editorState = useEditorState({
     editor,
     selector: (ctx) => {
@@ -146,351 +170,385 @@ export const TipTap = ({ className }: TipTapProps) => {
     },
   });
 
+
+
   if (!editor) {
     return <div>No Editor</div>;
   }
 
   return (
-    <div className="h-full">
-      <div className="flex items-center gap-x-1 p-2 border shadow-md rounded-t-lg border-gray-200 bg-gradient-to-b from-muted to-white">
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Menu />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="grid grid-cols-2 gap-1">
-            <Button
-              variant="editor"
-              size="sm"
-              onClick={() => {
-                editor.chain().focus().toggleBold().run();
-                toggleBold(!bold);
-              }}
-              className={`${!editor.isActive("bold") ? "opacity-50" : ""}`}
-            >
-              <BoldIcon />
-            </Button>
+    <div
+      className={cn(
+        "flex flex-col w-full h-full shadow-md rounded-lg",
+        className
+      )}
+    >
+      <div
+        id="controls"
+        className="flex overflow-scroll items-center gap-x-1 p-2 border-b shadow-sm rounded-t-lg border "
+      >
+        <Button size="sm" variant="editor" onClick={onSave}>
+          Save
+        </Button>
+        {
+          
+            <div className="flex gap-1">
+              <Button
+                variant="editor"
+                size="sm"
+                onClick={() => {
+                  editor.chain().focus().toggleBold().run();
+                  toggleBold(!bold);
+                }}
+                className={`${!editor.isActive("bold") ? "opacity-50" : ""}`}
+              >
+                <BoldIcon />
+              </Button>
 
-            <Button
-              variant="editor"
-              size="sm"
-              onClick={() => {
-                editor.chain().focus().toggleItalic().run();
-                toggleItalic(!italic);
-              }}
-              className={`${!editor.isActive("italic") ? "opacity-50" : ""}`}
-            >
-              <ItalicIcon />
-            </Button>
-            <Button
-              size="sm"
-              onClick={() => {
-                editor.commands.toggleUnderline();
-                toggleUnderline(!underline);
-              }}
-              className={`${!editor.isActive("underline") ? "opacity-50" : ""}`}
-            >
-              <Underline />
-            </Button>
-            <Button
-              size="sm"
-              onClick={() => {
-                editor.commands.toggleStrike();
-                toggleStrike(!strike);
-              }}
-              className={`${!editor.isActive("strike") ? "opacity-50" : ""}`}
-            >
-              <Strikethrough />
-            </Button>
-            <Button
-              variant="editor"
-              onClick={() => editor.commands.toggleCode()}
-              size={"sm"}
-              className={`${!editor.isActive("code") ? "opacity-50" : ""}`}
-            >
-              <Code2 />
-            </Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button size="sm">
-                  <Highlighter />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="flex flex-col max-h-[100px] gap-2">
-                <Button
-                  size="sm"
-                  onClick={() => editor.commands.toggleHighlight()}
-                  className={`bg-yellow-500 ${
-                    !editor.isActive("highlight") ? "opacity-50" : ""
-                  }`}
-                >
-                  Yellow
-                </Button>
+              <Button
+                variant="editor"
+                size="sm"
+                onClick={() => {
+                  editor.chain().focus().toggleItalic().run();
+                  toggleItalic(!italic);
+                }}
+                className={`${!editor.isActive("italic") ? "opacity-50" : ""}`}
+              >
+                <ItalicIcon />
+              </Button>
+              <Button
+                size="sm"
+                variant="editor"
+                onClick={() => {
+                  editor.commands.toggleUnderline();
+                  toggleUnderline(!underline);
+                }}
+                className={`${
+                  !editor.isActive("underline") ? "opacity-50" : ""
+                }`}
+              >
+                <Underline />
+              </Button>
+              <Button
+                size="sm"
+                variant="editor"
+                onClick={() => {
+                  editor.commands.toggleStrike();
+                  toggleStrike(!strike);
+                }}
+                className={`${!editor.isActive("strike") ? "opacity-50" : ""}`}
+              >
+                <Strikethrough />
+              </Button>
+              <Button
+                variant="editor"
+                onClick={() => editor.commands.toggleCode()}
+                size={"sm"}
+                className={`${!editor.isActive("code") ? "opacity-50" : ""}`}
+              >
+                <Code2 />
+              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button size="sm" variant="editor">
+                    <Highlighter />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="flex flex-col max-h-[100px] gap-2">
+                  <Button
+                    size="sm"
+                    variant="editor"
+                    onClick={() => editor.commands.toggleHighlight()}
+                    className={`bg-yellow-500 ${
+                      !editor.isActive("highlight") ? "opacity-50" : ""
+                    }`}
+                  >
+                    Yellow
+                  </Button>
 
-                <Button
-                  size="sm"
-                  onClick={() =>
-                    editor.commands.toggleHighlight({ color: "#ffc078" })
-                  }
-                  className={`bg-orange-500 ${
-                    !editor.isActive("highlight", { color: "#ffc078" })
-                      ? "opacity-50"
-                      : ""
-                  }`}
-                >
-                  Orange
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={() =>
-                    editor.commands.toggleHighlight({ color: "#8ce99a" })
-                  }
-                  className={`bg-green-500 ${
-                    !editor.isActive("highlight", { color: "#8ce99a" })
-                      ? "opacity-50"
-                      : ""
-                  }`}
-                >
-                  Green
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={() =>
-                    editor.commands.toggleHighlight({ color: "#74c0fc" })
-                  }
-                  className={`bg-blue-500 ${
-                    !editor.isActive("highlight", { color: "#74c0fc" })
-                      ? "opacity-50"
-                      : ""
-                  }`}
-                >
-                  Blue
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={() =>
-                    editor.commands.toggleHighlight({ color: "#b197fc" })
-                  }
-                  className={`bg-purple-500 ${
-                    !editor.isActive("highlight", { color: "#b197fc" })
-                      ? "opacity-50"
-                      : ""
-                  }`}
-                >
-                  Purple
-                </Button>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button size="sm" className="text-lg text-blue-500">
-                  A
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="flex flex-col max-h-[100px] items-center gap-2">
-                <div className="grid grid-cols-2 gap-2">
-                  <input
-                    type="color"
-                    onInput={(event) =>
-                      editor
-                        .chain()
-                        .focus()
-                        .setColor(event.currentTarget.value)
-                        .run()
+                  <Button
+                    size="sm"
+                    variant="editor"
+                    onClick={() =>
+                      editor.commands.toggleHighlight({ color: "#ffc078" })
                     }
-                    value={editorState?.color}
-                    data-testid="setColor"
-                  />
-                  <Button
-                    size="sm"
-                    onClick={() => editor.commands.setColor("#958DF1")}
-                    className={editorState?.isPurple ? "opacity-50" : ""}
-                    data-testid="setPurple"
-                  >
-                    Purple
-                  </Button>
-                  <Button
-                    size="sm"
-                    onClick={() => editor.commands.setColor("#F98181")}
-                    className={editorState?.isRed ? "opacity-50" : ""}
-                    data-testid="setRed"
-                  >
-                    Red
-                  </Button>
-                  <Button
-                    size="sm"
-                    onClick={() => editor.commands.setColor("#FBBC88")}
-                    className={editorState?.isOrange ? "opacity-50" : ""}
-                    data-testid="setOrange"
+                    className={`bg-orange-500 ${
+                      !editor.isActive("highlight", { color: "#ffc078" })
+                        ? "opacity-50"
+                        : ""
+                    }`}
                   >
                     Orange
                   </Button>
                   <Button
                     size="sm"
-                    onClick={() => editor.commands.setColor("#FAF594")}
-                    className={editorState?.isYellow ? "opacity-50" : ""}
-                    data-testid="setYellow"
+                    variant="editor"
+                    onClick={() =>
+                      editor.commands.toggleHighlight({ color: "#8ce99a" })
+                    }
+                    className={`bg-green-500 ${
+                      !editor.isActive("highlight", { color: "#8ce99a" })
+                        ? "opacity-50"
+                        : ""
+                    }`}
                   >
-                    Yellow
+                    Green
                   </Button>
                   <Button
                     size="sm"
-                    onClick={() => editor.commands.setColor("#70CFF8")}
-                    className={editorState?.isBlue ? "opacity-50" : ""}
-                    data-testid="setBlue"
+                    variant="editor"
+                    onClick={() =>
+                      editor.commands.toggleHighlight({ color: "#74c0fc" })
+                    }
+                    className={`bg-blue-500 ${
+                      !editor.isActive("highlight", { color: "#74c0fc" })
+                        ? "opacity-50"
+                        : ""
+                    }`}
                   >
                     Blue
                   </Button>
                   <Button
                     size="sm"
-                    onClick={() => editor.commands.setColor("#94FADB")}
-                    className={editorState?.isTeal ? "opacity-50" : ""}
-                    data-testid="setTeal"
-                  >
-                    Teal
-                  </Button>
-                  <Button
-                    size="sm"
-                    onClick={() => editor.commands.setColor("#B9F18D")}
-                    className={editorState?.isGreen ? "opacity-50" : ""}
-                    data-testid="setGreen"
-                  >
-                    Green
-                  </Button>
-                </div>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button size="sm" className="text-lg">
-                  <Heading1 />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="flex flex-col max-h-[100px] items-center gap-2">
-                <Button
-                  size="sm"
-                  onClick={() => {
-                    editor.commands.toggleHeading({ level: 1 });
-                  }}
-                >
-                  <Heading1 />
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={() => {
-                    editor.commands.toggleHeading({ level: 2 });
-                  }}
-                >
-                  <Heading2 />
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={() => {
-                    editor.commands.toggleHeading({ level: 3 });
-                  }}
-                >
-                  <Heading3 />
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={() => {
-                    editor.commands.toggleHeading({ level: 4 });
-                  }}
-                >
-                  <Heading4 />
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={() => {
-                    editor.commands.toggleHeading({ level: 5 });
-                  }}
-                >
-                  <Heading5 />
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={() => {
-                    editor.commands.toggleHeading({ level: 6 });
-                  }}
-                >
-                  <Heading6 />
-                </Button>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button size="sm" className="text-sm">
-                  Font
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="flex flex-col max-h-[100px] items-center gap-2">
-                {fonts.map((font) => (
-                  <Button
-                    key={font}
-                    size="sm"
-                    variant="outline"
+                    variant="editor"
                     onClick={() =>
-                      editor.chain().focus().setFontFamily(font).run()
+                      editor.commands.toggleHighlight({ color: "#b197fc" })
                     }
-                    className="font-sans"
+                    className={`bg-purple-500 ${
+                      !editor.isActive("highlight", { color: "#b197fc" })
+                        ? "opacity-50"
+                        : ""
+                    }`}
                   >
-                    {font}
+                    Purple
                   </Button>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button size="sm" className="text-sm">
-                  <span className="text-sm">A</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="flex flex-col max-h-[100px] items-center gap-2">
-                {fontSizes.map((size) => (
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button size="sm" variant="editor" className="text-lg text-blue-500">
+                    A
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="flex flex-col max-h-[100px] items-center gap-2">
+                  <div className="grid grid-cols-2 gap-2">
+                    <input
+                      type="color"
+                      onInput={(event) =>
+                        editor
+                          .chain()
+                          .focus()
+                          .setColor(event.currentTarget.value)
+                          .run()
+                      }
+                      value={editorState?.color}
+                      data-testid="setColor"
+                    />
+                    <Button
+                      size="sm"
+                      variant="editor"
+                      onClick={() => editor.commands.setColor("#958DF1")}
+                      className={editorState?.isPurple ? "opacity-50" : ""}
+                      data-testid="setPurple"
+                    >
+                      Purple
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="editor"
+                      onClick={() => editor.commands.setColor("#F98181")}
+                      className={editorState?.isRed ? "opacity-50" : ""}
+                      data-testid="setRed"
+                    >
+                      Red
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="editor"
+                      onClick={() => editor.commands.setColor("#FBBC88")}
+                      className={editorState?.isOrange ? "opacity-50" : ""}
+                      data-testid="setOrange"
+                    >
+                      Orange
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="editor"
+                      onClick={() => editor.commands.setColor("#FAF594")}
+                      className={editorState?.isYellow ? "opacity-50" : ""}
+                      data-testid="setYellow"
+                    >
+                      Yellow
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="editor"
+                      onClick={() => editor.commands.setColor("#70CFF8")}
+                      className={editorState?.isBlue ? "opacity-50" : ""}
+                      data-testid="setBlue"
+                    >
+                      Blue
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="editor"
+                      onClick={() => editor.commands.setColor("#94FADB")}
+                      className={editorState?.isTeal ? "opacity-50" : ""}
+                      data-testid="setTeal"
+                    >
+                      Teal
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="editor"
+                      onClick={() => editor.commands.setColor("#B9F18D")}
+                      className={editorState?.isGreen ? "opacity-50" : ""}
+                      data-testid="setGreen"
+                    >
+                      Green
+                    </Button>
+                  </div>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button size="sm" variant="editor" className="text-lg">
+                    <Heading1 />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="flex flex-col max-h-[100px] items-center gap-2">
                   <Button
-                    key={size}
                     size="sm"
-                    variant="outline"
-                    onClick={() => editor.commands.setFontSize(size)}
-                    className="font-sans"
-                    style={{ fontSize: size }}
+                    variant="editor"
+                    onClick={() => {
+                      editor.commands.toggleHeading({ level: 1 });
+                    }}
                   >
-                    {size}
+                    <Heading1 />
                   </Button>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button size="sm" className="text-sm">
-                  <AlignJustify />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="flex items-center gap-2">
-                {textAlign.map((align) => (
                   <Button
-                    key={align}
                     size="sm"
-                    variant="outline"
-                    onClick={() => editor.commands.toggleTextAlign(align)}
-                    className="font-sans"
+                    variant="editor"
+                    onClick={() => {
+                      editor.commands.toggleHeading({ level: 2 });
+                    }}
                   >
-                    {align === "left" ? (
-                      <AlignLeft />
-                    ) : align === "right" ? (
-                      <AlignRight />
-                    ) : align === "center" ? (
-                      <AlignCenter />
-                    ) : (
-                      <AlignJustify />
-                    )}
+                    <Heading2 />
                   </Button>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </DropdownMenuContent>
-        </DropdownMenu>
+                  <Button
+                    size="sm"
+                    variant="editor"
+                    onClick={() => {
+                      editor.commands.toggleHeading({ level: 3 });
+                    }}
+                  >
+                    <Heading3 />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="editor"
+                    onClick={() => {
+                      editor.commands.toggleHeading({ level: 4 });
+                    }}
+                  >
+                    <Heading4 />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="editor"
+                    onClick={() => {
+                      editor.commands.toggleHeading({ level: 5 });
+                    }}
+                  >
+                    <Heading5 />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="editor"
+                    onClick={() => {
+                      editor.commands.toggleHeading({ level: 6 });
+                    }}
+                  >
+                    <Heading6 />
+                  </Button>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="editor" size="sm" className="text-sm">
+                    Font
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="flex flex-col max-h-[100px] items-center gap-2">
+                  {fonts.map((font) => (
+                    <Button
+                      key={font}
+                      size="sm"
+                      variant="outline"
+                      onClick={() =>
+                        editor.chain().focus().setFontFamily(font).run()
+                      }
+                      className="font-sans w-full"
+                    >
+                      {font}
+                    </Button>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button size="sm" variant="editor" className="text-sm">
+                    <span className="text-sm">A</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="flex flex-col max-h-[100px] items-center gap-2">
+                  {fontSizes.map((size) => (
+                    <Button
+                      key={size}
+                      size="sm"
+                      variant="outline"
+                      onClick={() => editor.commands.setFontSize(size)}
+                      className="font-sans"
+                      style={{ fontSize: size }}
+                    >
+                      {size}
+                    </Button>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button size="sm" variant="editor" className="text-sm">
+                    <AlignJustify />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="flex items-center gap-2">
+                  {textAlign.map((align) => (
+                    <Button
+                      key={align}
+                      size="sm"
+                      variant="outline"
+                      onClick={() => editor.commands.toggleTextAlign(align)}
+                      className="font-sans"
+                    >
+                      {align === "left" ? (
+                        <AlignLeft />
+                      ) : align === "right" ? (
+                        <AlignRight />
+                      ) : align === "center" ? (
+                        <AlignCenter />
+                      ) : (
+                        <AlignJustify />
+                      )}
+                    </Button>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          
+        }
         <Button
           variant="outline"
           onClick={() => editor.commands.undo()}
@@ -507,10 +565,14 @@ export const TipTap = ({ className }: TipTapProps) => {
           <ArrowRight />
         </Button>
       </div>
-      <EditorContent
-        className="w-full p-2 h-full overflow-scroll bg-white rounded-b-lg shadow-md"
-        editor={editor}
-      />
+      <div
+        className={cn(
+          "h-full overflow-scroll bg-white dark:bg-black rounded-b-lg",
+          editorClassName
+        )}
+      >
+        <EditorContent className={cn("w-full h-full p-3")} editor={editor} />
+      </div>
     </div>
   );
 };

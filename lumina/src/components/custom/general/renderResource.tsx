@@ -12,6 +12,7 @@ export const renderResource = (currentResource: any) => {
   switch (fileType) {
     // 🖼️ Images
     case "image/jpeg":
+    case "image/jpg":
     case "image/png":
     case "image/webp":
     case "image/gif":
@@ -21,8 +22,7 @@ export const renderResource = (currentResource: any) => {
         <Image
           src={url}
           alt={fileName}
-          width={800}
-          height={600}
+          fill
           className="rounded border"
         />
       );
@@ -69,7 +69,7 @@ export const renderResource = (currentResource: any) => {
     case "application/vnd.ms-excel":
       return (
         <iframe
-          src={`https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`}
+          
           title={fileName}
           className="w-full h-[600px] rounded border"
         />

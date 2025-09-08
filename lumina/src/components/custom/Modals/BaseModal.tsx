@@ -11,7 +11,7 @@ interface BaseModalProps {
 
 export default function BaseModal({ title, open, onOpenChange, children }: BaseModalProps) {
   return (
-    <div className="bg-muted">
+    <div className="">
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>

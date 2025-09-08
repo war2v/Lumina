@@ -25,6 +25,18 @@ export type PresentationResourceType = {
     uploaded_by: string
 }
 
+export type Account = {
+    id: string;
+    created_at: string;
+    username: string;
+    first_name: string;
+    last_name: string;
+    role: "attendee" | "presenter";
+    updated_at: string;
+    profile_image_url: string;
+    bio: string;
+}
+
 export interface ApiResponse<T> {
     success: boolean;
     data?: T;
@@ -35,3 +47,5 @@ export interface ApiResponse<T> {
 export interface note{
     id: string;
 }
+
+

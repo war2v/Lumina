@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, FileText, LogOut, Search,  Monitor, Grid2X2Plus, ArrowBigLeft } from "lucide-react";
+import { Home, FileText, LogOut, Search,  Monitor, Grid2X2Plus } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -19,7 +19,7 @@ export default function Sidebar() {
   const logout = useLogout();
 
   return (
-    <aside className="bg-muted/50 dark:bg-gray-950 border-r flex flex-col p-4 w-1/6 overflow-hidden">
+    <aside className="border-r flex flex-col p-4 w-1/6 overflow-hidden">
       
       <Link href="/" className="flex">
         <Image src="/logo.svg" alt="Logo" width={180} height={30} />

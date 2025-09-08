@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/browserClient";
-import { getCurrentResourceId } from "@/app/queries/client/getCurrentResourceId";
+import { getCurrentResourceId } from "@/lib/queries/client/getCurrentResourceId";
 
 export function useRealtimeCurrentResource(presentationId: string, current_resource_ID: string) {
   const supabase = createClient();

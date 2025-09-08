@@ -1,27 +1,26 @@
 "use client";
-import { PresentationResourceType } from "@/app/types";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import Image from "next/image";
-import { useState } from "react";
-import PDFViewer from "./PDFviewer";
-import { setCurrentResource } from "@/app/actions/setCurrentResource";
+import { setCurrentResource } from "@/lib/actions/setCurrentResource";
 import { useRouter } from "next/navigation";
 import { renderResource } from "./renderResource";
-import { QRJoinCode } from "./QRcode";
+
 
 interface CurrentResourceProps {
-  resources: any[];
+  resources: any[] | null; 
   id: string;
   projectId: string;
   joinCode: string;
+  className?: string;
 }
 const CurrentResource = ({
   resources,
   id,
   projectId,
   joinCode,
+  className,
 }: CurrentResourceProps) => {
   if (!resources || resources.length === 0) {
     return (
@@ -36,10 +35,13 @@ const CurrentResource = ({
     );
   }
 
+ 
+  
+
   const router = useRouter();
   const currentResource = resources[Number(id)];
 
-  //console.log(id, resources.length);
+  
 
   const incrementCurrentResourceItem = () => {
     if (Number(id) === resources.length - 1) {
@@ -59,18 +61,14 @@ const CurrentResource = ({
     router.refresh();
   };
 
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Current Resource</CardTitle>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-4 items-center justify-center">
-        <div className="w-full h-[600px] flex items-center justify-center bg-gray-100 rounded-md overflow-hidden relative">
-          {renderResource(currentResource)}
 
-          <div className="absolute top-4 right-4 bg-white p-2 rounded-md shadow-md z-10">
-            <QRJoinCode joinCode={joinCode} presentation_id={projectId} />
-          </div>
+  
+
+  return (
+    <div className={`w-full ${className}`}>
+      <div className="flex h-4/5 flex-col gap-4 items-center justify-center">
+        <div className="w-full h-full flex items-center justify-center rounded-md overflow-hidden relative">
+          <div>{renderResource(currentResource)}</div>
         </div>
         <div className="flex items-center justify-between w-full mt-4">
           {resources.length > 0 ? (
@@ -101,8 +99,8 @@ const CurrentResource = ({
             <></>
           )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
