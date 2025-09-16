@@ -8,10 +8,11 @@ import { PresenterDashboard } from "@/components/custom/Dashboards/Presenter";
 import { AttendeeDashboard } from "@/components/custom/Dashboards/Attendee";
 import CreatePresentationModal from "@/components/custom/Modals/CreatePresentationModal";
 import { getUserResources } from "@/lib/queries/client/getUserResource";
+import { PresentationType } from "@/app/types";
 
 interface Props {
     className?: string;
-    presentations: any[] | null;
+    presentations: PresentationType[];
     user: any;
     notes: any[]
 }

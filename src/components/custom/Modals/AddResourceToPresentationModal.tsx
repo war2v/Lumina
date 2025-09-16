@@ -19,15 +19,17 @@ export type Resource = {
   bucket_path: string;
 };
 
-export default function AddResourceToPresentaitionModal({
+export default function AddResourceToPresentationModal({
   open,
   onOpenChange,
   resource_id,
+  resource_name,
   presentations,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   resource_id: string;
+  resource_name: string;
   presentations: any[] | null;
 }) {
   const [presId, setPresId] = useState("");
@@ -57,10 +59,10 @@ export default function AddResourceToPresentaitionModal({
       open={open}
       onOpenChange={onOpenChange}
     >
-      <form onSubmit={onSubmit}>
-        <h1>{resource_id}</h1>
+      <form className="border-muted border rounded-lg p-2" onSubmit={onSubmit}>
+        <h1 className="pb-4">{resource_name}</h1>
         <Select onValueChange={(e) => setPresId(e)}>
-          <SelectTrigger className="overflow-hidden max-w-[300px]">
+          <SelectTrigger className="overflow-hidden mb-2 max-w-[300px]">
             <div className="overflow-hidden">{presName}</div>
           </SelectTrigger>
           <SelectContent>

@@ -10,7 +10,7 @@ import { DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MenuIcon } from "lucide-react";
 import CreatePresentationModal from "../Modals/CreatePresentationModal";
 import { useState } from "react";
-import AddResourceToPresentaitionModal from "../Modals/AddResourceToPresentationModal";
+import AddResourceToPresentationModal from "../Modals/AddResourceToPresentationModal";
 import DeleteResourceModal from "../Modals/DeleteResourceModal";
 import CreateResourceModal from "../Modals/CreateResourceModal";
 import { cn } from "@/lib/utils";
@@ -111,8 +111,9 @@ export const UserResourceList = ({ className ,resources, presentations }: Props)
         open={openCreate}
         onOpenChange={setOpenCreatePresentation}
       />
-      <AddResourceToPresentaitionModal
+      <AddResourceToPresentationModal
         resource_id={resourceId}
+        resource_name={resources && resourceId ? resources[Number(resourceId)].file_name : ""}
         presentations={presentations}
         open={openLinkResource}
         onOpenChange={setLinkResource}

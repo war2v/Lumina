@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, CalendarDays } from 'lucide-react';
+import { PresentationType } from '@/app/types';
 
 interface CalendarEvent {
   id: string | number;
@@ -10,7 +11,7 @@ interface CalendarEvent {
 }
 
 interface CalendarProps {
-  events?: CalendarEvent[];
+  presentations?: PresentationType[];
 }
 
 // Sample events data - replace with your actual events
@@ -41,8 +42,17 @@ const sampleEvents: CalendarEvent[] = [
   }
 ];
 
-const PresentationCalendar: React.FC<CalendarProps> = ({ events = sampleEvents }) => {
+const PresentationCalendar: React.FC<CalendarProps> = ({ presentations = sampleEvents }) => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  let events: CalendarEvent[];
+
+  events = presentations.map(item => ({
+    id: item.id,
+    title: item.title,
+    start_datetime: item.start_datetime?.toString()
+  }));
+
+  
   
   const monthNames: string[] = [
     "January", "February", "March", "April", "May", "June",
@@ -56,6 +66,7 @@ const PresentationCalendar: React.FC<CalendarProps> = ({ events = sampleEvents }
   const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
   const daysInMonth = lastDayOfMonth.getDate();
   const startingDayOfWeek = firstDayOfMonth.getDay();
+
   
   // Group events by date
   const eventsByDate = useMemo((): Record<string, CalendarEvent[]> => {
@@ -117,7 +128,7 @@ const PresentationCalendar: React.FC<CalendarProps> = ({ events = sampleEvents }
     calendarDays.push(day);
   }
   
-  const currentMonthEvents = events.filter((event: CalendarEvent) => {
+  const currentMonthEvents = events?.filter((event: CalendarEvent) => {
     const eventDate = new Date(event.start_datetime);
     return eventDate.getMonth() === currentDate.getMonth() && 
            eventDate.getFullYear() === currentDate.getFullYear();

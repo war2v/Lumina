@@ -3,17 +3,11 @@ import { createClient } from "@/lib/supabase/serverClient";
 import { NextRequest } from "next/server";
 
 interface Params {
-    params: { id: string }
+    params: Promise<{ id: string }>
 }
 
-export async function GET(
-
-    request: NextRequest, 
-    { params }: Params
-
-    ): Promise<Response> 
-
-{
+export async function GET(request: NextRequest, props: Params): Promise<Response> {
+    const params = await props.params;
 
     const supabase = await createClient();
     const { id } = params;
@@ -22,23 +16,17 @@ export async function GET(
         .select('*')
         .eq('id', id)
         .single()
-    
+
     const response: ApiResponse<PresentationType> = error
         ? { success: false, error: error.message }
         : { success: true, data: data as PresentationType}
-    
-    return Response.json(response, { status: error ? 404 : 200 })
 
+    return Response.json(response, { status: error ? 404 : 200 })
 }
 
-export async function PUT(
+export async function PUT(request: Request, props: Params): Promise<Response> {
+    const params = await props.params;
 
-    request: Request,
-    { params }: Params)
-
-    : Promise<Response> 
-{
-    
     const supabase = await createClient();
     const { id } = params;
     const body = await request.json();
@@ -56,9 +44,8 @@ export async function PUT(
         ? { success: false, error: error.message }
         : { success: true, data: data ?? [] }
 
-    
-    return Response.json(response)
 
+    return Response.json(response)
 }
 
 export async function DELETE(

@@ -3,10 +3,11 @@ import { cn } from "@/lib/utils";
 import { NotesContent } from "@/app/user/home/notes/content";
 import PresentationCalendar from "../general/PresentationCalendar";
 import { UserResourceList } from "../general/UserResourceList";
+import { PresentationType } from "@/app/types";
 
 interface Props {
   resources: any[] | null;
-  presentations: any[] | null;
+  presentations: PresentationType[];
   className?: string;
   notes: any[];
 }
@@ -25,7 +26,7 @@ export const UnifiedDashboard = ({
       >
         <div className="grid lg:grid-cols-2 md:grid-cols-1  gap-4">
           <div className="flex flex-col gap-4">
-            <PresentationCalendar />
+            <PresentationCalendar presentations={presentations} />
           </div>
           <div className="flex flex-col gap-4">
             <UserResourceList

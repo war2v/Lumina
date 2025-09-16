@@ -1,17 +1,27 @@
+import { UUID } from "crypto";
+
 export type PresentationType = {
-    active: boolean;
-    created_at: string;
-    created_by: string;
-    created_by_username: string;
-    description: string;
     id: string;
-    is_public: boolean;
+    created_at: string;
     title: string;
+    description: string;
+    is_public: boolean;
+    created_by: string;
+    active: boolean;
+    created_by_username: string;
     current_resource_id: string;
     invite_code: string;
+    subtitle: string;
+    co_presenter_ids: JSON;
+    organization_id: string;
     tags: string;
     start_datetime: Date;
     end_datetime: Date;
+    timezone: string;
+    questions_enabled: boolean;
+    languages: string;
+    linked_note_id: string;
+    
 }
 
 export type PresentationResourceType = {

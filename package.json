@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -67,15 +67,15 @@
     "date-fns": "^4.1.0",
     "lodash.throttle": "^4.1.1",
     "lucide-react": "^0.511.0",
-    "next": "^15.3.2",
-    "next-qrcode": "^2.5.1",
+    "next": "15.5.2",
+    "next-qrcode": "^0.0.0",
     "next-themes": "^0.4.6",
     "pdfjs-dist": "^5.3.31",
     "qrcode.react": "^4.2.0",
-    "react": "^19.0.0",
+    "react": "19.1.1",
     "react-day-picker": "^9.8.1",
     "react-doc-viewer": "^0.1.14",
-    "react-dom": "^19.0.0",
+    "react-dom": "19.1.1",
     "react-hook-form": "^7.56.4",
     "react-hotkeys-hook": "^5.1.0",
     "react-pdf": "^9.2.1",
@@ -88,13 +88,17 @@
     "@eslint/eslintrc": "^3",
     "@types/lodash.throttle": "^4.1.9",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.1.8",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9",
+    "eslint": "^9.35.0",
+    "eslint-config-next": "^15.5.2",
     "postcss": "^8",
     "sass": "^1.90.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9"
   }
 }

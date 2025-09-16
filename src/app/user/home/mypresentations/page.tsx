@@ -48,7 +48,7 @@ const MyPresentations = async () => {
         <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-2 h-full">
           
           <div className="h-full">
-            <PresentationCalendar events={presentations} />
+            <PresentationCalendar presentations={presentations} />
           </div>
           <div>
             <UserResourceList
