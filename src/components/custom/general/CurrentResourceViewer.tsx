@@ -1,6 +1,5 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useState } from "react";
 import { useRealtimeCurrentResource } from "@/hooks/useRealtimeCurrentResource";
 import { renderResource } from "./renderResource";
 import { Resource } from "@/app/types";

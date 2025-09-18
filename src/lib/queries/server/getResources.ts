@@ -51,7 +51,7 @@ export const getResourcesById = async (presentation_id: string) => {
     
     ////console.log(data"error");
    
-    let resource_list: Resource[] = [];
+    const resource_list: Resource[] = [];
     
     for(let i = 0; i < resources.length; i++){
         resource_list.push({

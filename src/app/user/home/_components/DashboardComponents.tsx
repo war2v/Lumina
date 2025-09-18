@@ -8,14 +8,14 @@ import { PresenterDashboard } from "@/components/custom/Dashboards/Presenter";
 import { AttendeeDashboard } from "@/components/custom/Dashboards/Attendee";
 import CreatePresentationModal from "@/components/custom/Modals/CreatePresentationModal";
 import { getUserResources } from "@/lib/queries/client/getUserResource";
-import { note, Presentation } from "@/app/types";
+import { Note, Presentation, Resource } from "@/app/types";
 import { User } from "@supabase/supabase-js";
 
 interface Props {
   className?: string;
   presentations: Presentation[];
   user: User | null;
-  notes: note[];
+  notes: Note[];
 }
 export default function Dashboard({
   user,
@@ -25,7 +25,7 @@ export default function Dashboard({
 }: Props) {
   const [dashboard, setDashboard] = useState("unified");
   const [createPresModal, openCreatePresModal] = useState(false);
-  const [resources, setResources] = useState<any[]>([]);
+  const [resources, setResources] = useState<Resource[]>([]);
 
   console.log();
 

@@ -1,9 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Image from "next/image";
 import { useState } from "react";
-import PDFViewer from "./PDFviewer";
 import { renderResource } from "./renderResource";
 import { Resource } from "@/app/types";
 
@@ -33,6 +31,27 @@ const CurrentLocalResource = ({
     );
   }
 
+   const incrementCurrentResourceItem = () => {
+      if(resources){
+        if (localId > resources.length - 1) {
+          setLocalId(0)
+        } else {
+          setLocalId(localId + 1)
+        }
+    };
+   }
+  
+    const decrementCurrentResourceItem = () => {
+      if(resources){
+        if (Number(localId) === 0) {
+          setLocalId(Number((resources.length - 1)));
+        } else {
+          setLocalId(localId - 1);
+        }
+      }
+    };
+   
+
  
 
   const userCurrentResource = resources[localId];
@@ -49,11 +68,7 @@ const CurrentLocalResource = ({
         </div>
         <div className="flex items-center justify-between w-full mt-4">
           <Button
-            onClick={() => {
-              localId - 1 < 0
-                ? setLocalId(resources.length - 1)
-                : setLocalId(localId - 1);
-            }}
+            onClick={decrementCurrentResourceItem}
             type="button"
             size="lg"
           >
@@ -65,11 +80,7 @@ const CurrentLocalResource = ({
               : `0 of ${resources.length}`}
           </p>
           <Button
-            onClick={() => {
-              localId + 1 > resources.length - 1
-                ? setLocalId(0)
-                : setLocalId(localId + 1);
-            }}
+            onClick={incrementCurrentResourceItem}
             type="button"
             size="lg"
           >

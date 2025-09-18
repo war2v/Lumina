@@ -2,7 +2,6 @@
 import { Presentation } from "@/app/types";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useUser } from "@/hooks/useUser";
 import Link from "next/link";
 
 interface PresentationListProps {

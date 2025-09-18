@@ -109,7 +109,7 @@ export default function EditPresentationModal({
           };
 
           if (inserted) uploadedResources.push(inserted); 
-          const { data, error } = await supabase
+          const { error } = await supabase
             .from("resource_associations")
             .insert({
               "presentation_id": presentationId,

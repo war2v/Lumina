@@ -17,7 +17,7 @@ export const getAllPresentationsNotUsers = async () => {
         throw new Error('Error Fetchin Data.')
     }
     
-    let pres_data: Presentation[] = [];
+    const pres_data: Presentation[] = [];
         
         if(data){
             for(let i = 0; i < data.length; i++){

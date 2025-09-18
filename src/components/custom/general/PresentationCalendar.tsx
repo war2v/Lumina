@@ -46,9 +46,9 @@ const PresentationCalendar: React.FC<CalendarProps> = ({
   presentations = sampleEvents,
 }) => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  let events: CalendarEvent[];
 
-  events = presentations.map((item) => ({
+
+  const events: CalendarEvent[] = presentations.map((item) => ({
     id: item.id,
     title: item.title,
     start_datetime: item.start_datetime?.toString(),

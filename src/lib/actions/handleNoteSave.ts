@@ -1,5 +1,4 @@
 import { getUser } from "@/lib/supabase/getUserServer";
-import { SupabaseClient } from "@supabase/supabase-js";
 import { createClient } from "../supabase/browserClient";
 
 export interface HandleSaveProps {

@@ -1,4 +1,4 @@
-import { PresentationResourceType, Resource } from "@/app/types";
+import { Resource } from "@/app/types";
 import { getUser } from "@/lib/supabase/getUserClient";
 import { createClient } from "@/lib/supabase/browserClient";
 import { redirect } from "next/navigation";
@@ -55,10 +55,10 @@ export const getResourcesById = async (presentation_id: string) => {
         return errorVar
     }
     
-    let resouce_list: Resource[] = [] 
+    const resource_list: Resource[] = [] 
     if(resources){
         for(let i = 0; i < resources.length; i++){
-            resouce_list.push({
+            resource_list.push({
                 id: resources[i].id,
                 created_at: resources[i].created_at,
                 file_name: resources[i].file_name,
@@ -72,7 +72,7 @@ export const getResourcesById = async (presentation_id: string) => {
     }
     
        
-    return resouce_list
+    return resource_list
    
     
 
