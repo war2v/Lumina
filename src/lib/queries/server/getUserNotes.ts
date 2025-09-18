@@ -40,7 +40,7 @@ export const getUserNotes = async () => {
     
     //console.log(data)
 
-    let notes: Note[] = []
+    const notes: Note[] = []
 
     for(let i = 0; i < data.length; i++){
         notes.push({

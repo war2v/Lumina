@@ -12,7 +12,7 @@ export const getUserResources = async () => {
         redirect("/sign-in")
     }
 
-    let {data, error} = await supabase
+    const {data, error} = await supabase
         .from('presentation_resources')
         .select('*')
         .eq('uploaded_by', user.id);
