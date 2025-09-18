@@ -4,7 +4,7 @@ import { createClient } from "../supabase/browserClient";
 export default async function deletePresentation(id:string) {
     const supabase = createClient();
 
-    const { data, error } = await supabase
+    const { error } = await supabase
         .from("presentations")
         .delete()
         .eq('id', id)

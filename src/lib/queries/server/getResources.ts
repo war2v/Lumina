@@ -1,10 +1,10 @@
 
-import { PresentationResourceType } from "@/app/types";
+import { Resource } from "@/app/types";
 import { getUser } from "@/lib/supabase/getUserServer";
 import { createClient } from "@/lib/supabase/serverClient";
-import { da } from "date-fns/locale";
 import { redirect } from "next/navigation";
 import { toast } from "sonner";
+
 
 
 export const getResourcesById = async (presentation_id: string) => {
@@ -16,7 +16,7 @@ export const getResourcesById = async (presentation_id: string) => {
         redirect("/sign-in")
     }
 
-    let {data, error} = await supabase
+    const {data, error} = await supabase
         .from('resource_associations')
         .select('*')
         .eq('presentation_id', presentation_id);
@@ -31,34 +31,37 @@ export const getResourcesById = async (presentation_id: string) => {
     }
 
     //console.log(resource_ids)
-    let {data: resources, error: resources_error} = await supabase
+    const {data: resources, error: resources_error} = await supabase
         .from('presentation_resources')
         .select('*')
         .in('id', resource_ids);
     
     
-
+    if (resources_error){
+        toast(resources_error.message);
+        return null
+    }
     //console.log(resources);
     
     
     if (error) {
-        const errorVar: PresentationResourceType[] = [{
-            id: -1 ,
-            created_at:"error" ,
-            presentation_id: -1 ,
-            file_name: error.message ,
-            file_path:"error" ,
-            file_type:"error" ,
-            file_size: "error" ,
-            uploaded_by: "error",
-        }]
-        return errorVar
+        toast(error.message)
+        return null
     }
     
     ////console.log(data"error");
    
-       
-    return resources
+    let resource_list: Resource[] = [];
+    
+    for(let i = 0; i < resources.length; i++){
+        resource_list.push({
+            id: resources[i].id,
+            file_name: resources[i].file_name, 
+            file_path: resources[i].file_path, 
+            uploaded_by: resources[i].uploaded_by
+        })
+    }
+    return resource_list
    
     
 

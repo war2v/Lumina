@@ -12,7 +12,7 @@ export const getUserPresentations = async () => {
         redirect("/sign-in")
     }
 
-    let {data, error} = await supabase
+    const {data, error} = await supabase
         .from('presentations')
         .select('*')
         .eq('created_by', user.id);

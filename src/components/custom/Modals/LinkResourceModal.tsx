@@ -10,13 +10,8 @@ import {
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/browserClient";
-
-export type Resource = {
-  id: string;
-  file_name: string;
-  file_type: string;
-  bucket_path: string;
-};
+import { toast } from "sonner";
+import { Resource } from "@/app/types";
 
 export default function LinkResourceModal({
   open,
@@ -29,22 +24,25 @@ export default function LinkResourceModal({
   onOpenChange: (open: boolean) => void;
   presentation_id: string;
   presentation_title?: string;
-  resources: any[] | null | undefined;
+  resources: Resource[] | undefined;
 }) {
   const [resourceId, setResourceID] = useState("");
-  const [resourceName, setResourceName] = useState("");
   ////console.log(resource_id)
 
   const onSubmit = async () => {
     if (resourceId !== "" && resources) {
       const supabase = createClient();
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("resource_associations")
         .insert({
           presentation_id: presentation_id,
           resource_id: resources[Number(resourceId)].id,
         })
         .select();
+
+        if(error){
+          toast(error.message);
+        }
     }
     onOpenChange(false)
   };

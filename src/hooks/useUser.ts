@@ -28,7 +28,7 @@ export function useUser() {
     });
 
     return () => listener.subscription.unsubscribe();
-  }, []);
+  }, [supabase.auth]);
 
   return { user, loading };
 }

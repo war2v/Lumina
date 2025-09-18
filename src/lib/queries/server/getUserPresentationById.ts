@@ -1,10 +1,10 @@
-import { PresentationType } from "@/app/types";
+import { Presentation } from "@/app/types";
 import { getUser } from "@/lib/supabase/getUserServer";
 import { createClient } from "@/lib/supabase/serverClient";
 import { redirect } from "next/navigation";
 
 
-export const getUserPresentationsById = async (id: string): Promise<PresentationType> => {
+export const getUserPresentationsById = async (id: string): Promise<Presentation> => {
     const supabase = await createClient();
 
     const { user }  = await getUser()
@@ -13,7 +13,7 @@ export const getUserPresentationsById = async (id: string): Promise<Presentation
         redirect("/sign-in")
     }
 
-    let {data, error} = await supabase
+    const {data, error} = await supabase
         .from('presentations')
         .select('*')
         .eq('created_by', user.id)
@@ -26,7 +26,7 @@ export const getUserPresentationsById = async (id: string): Promise<Presentation
     //console.log(data)
     const {created_at, start_datetime, end_datetime, tags, title, description, is_public, created_by, active, created_by_username, current_resource_id, invite_code } = data[0];
    
-       const presentation: PresentationType = {
+       const presentation: Presentation = {
            active: active,
            created_at: created_at,
            created_by: created_by,

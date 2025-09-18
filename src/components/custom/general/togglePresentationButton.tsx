@@ -8,7 +8,7 @@ export default function TogglePresentationButton({
   initialState,
   presentationId,
 }: {
-  initialState: boolean;
+  initialState?: boolean;
   presentationId: string;
 }) {
   const [isActive, setIsActive] = useState(initialState);
@@ -17,8 +17,12 @@ export default function TogglePresentationButton({
   const handleClick = async () => {
     try {
       setIsLoading(true);
-      const newState = await togglePresentationActive(presentationId, isActive);
-      setIsActive(newState);
+      if(isActive){
+        const newState = await togglePresentationActive(presentationId, isActive);
+        setIsActive(newState);
+      }
+      
+      
     } catch (err) {
       console.error("Failed to toggle active state:", err);
     } finally {

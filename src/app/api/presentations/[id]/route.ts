@@ -1,4 +1,4 @@
-import { ApiResponse, PresentationType } from "@/app/types";
+import { ApiResponse, Presentation } from "@/app/types";
 import { createClient } from "@/lib/supabase/serverClient";
 import { NextRequest } from "next/server";
 
@@ -17,9 +17,9 @@ export async function GET(request: NextRequest, props: Params): Promise<Response
         .eq('id', id)
         .single()
 
-    const response: ApiResponse<PresentationType> = error
+    const response: ApiResponse<Presentation> = error
         ? { success: false, error: error.message }
-        : { success: true, data: data as PresentationType}
+        : { success: true, data: data as Presentation}
 
     return Response.json(response, { status: error ? 404 : 200 })
 }
@@ -40,7 +40,7 @@ export async function PUT(request: Request, props: Params): Promise<Response> {
         .select()
 
 
-    const response: ApiResponse<PresentationType[]> = error
+    const response: ApiResponse<Presentation[]> = error
         ? { success: false, error: error.message }
         : { success: true, data: data ?? [] }
 

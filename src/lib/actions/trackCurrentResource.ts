@@ -14,7 +14,7 @@ export default function trackCurrentResource(presentationId: string) {
             filter: `id=eq.${presentationId}`, // current presentation
             },
             (payload) => {
-            const newResourceId = payload.new.current_resource_id;
+            payload.new.current_resource_id;
             // Fetch or update displayed resource
             }
         )

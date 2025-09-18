@@ -3,9 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 import { useRealtimeCurrentResource } from "@/hooks/useRealtimeCurrentResource";
 import { renderResource } from "./renderResource";
+import { Resource } from "@/app/types";
 
 interface CurrentResourceProps {
-  resources: any[] | null;
+  resources: Resource[] | null;
   presentation_id: string;
   current_resource_id: string;
   title: string;
@@ -16,8 +17,10 @@ const CurrentResourceViewer = ({
   presentation_id,
   current_resource_id,
   title,
-  className
+  className,
 }: CurrentResourceProps) => {
+  const id = useRealtimeCurrentResource(presentation_id, current_resource_id);
+
   if (!resources) {
     return (
       <Card>
@@ -31,10 +34,6 @@ const CurrentResourceViewer = ({
     );
   }
 
-  const [localId, setLocalId] = useState(0);
-
-  const id = useRealtimeCurrentResource(presentation_id, current_resource_id);
-
   //////console.log(id)
   const currentResource = resources[id];
 
@@ -45,8 +44,12 @@ const CurrentResourceViewer = ({
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent className={`flex flex-col gap-4 items-center justify-center h-[600px] ${className}`}>
-        <div className={`w-full h-full flex items-center justify-center bg-gray-100 rounded-md overflow-hidden relative ${className}`}>
+      <CardContent
+        className={`flex flex-col gap-4 items-center justify-center h-[600px] ${className}`}
+      >
+        <div
+          className={`w-full h-full flex items-center justify-center bg-gray-100 rounded-md overflow-hidden relative ${className}`}
+        >
           {renderResource(currentResource)}
         </div>
         <div className="flex items-center justify-center w-full mt-4">

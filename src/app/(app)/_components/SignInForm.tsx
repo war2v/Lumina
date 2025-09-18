@@ -1,16 +1,12 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createClient } from "@/lib/supabase/browserClient";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { SignInSchema, SignInFormData } from "@/schema/AuthSchema";
-import { useUser } from "@/hooks/useUser";
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import Footer from "../_components/Footer";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
@@ -21,15 +17,13 @@ const SignInForm = () => {
   const router = useRouter();
   const supabase = createClient();
 
-  const [error, setError] = useState("");
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<SignInFormData>({ resolver: zodResolver(SignInSchema) });
 
   const onSubmit = async (data: SignInFormData) => {
-    setError("");
     const { error } = await supabase.auth.signInWithPassword({
       email: data.email,
       password: data.password,

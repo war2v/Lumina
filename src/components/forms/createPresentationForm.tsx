@@ -26,11 +26,7 @@ import { toast } from "sonner";
 
 type PresentationFormData = z.infer<typeof PresentationSchema>;
 
-export default function CreatePresentationForm({
-  onSuccess,
-}: {
-  onSuccess?: () => void;
-}) {
+export default function CreatePresentationForm() {
   const {
     register,
     handleSubmit,
@@ -51,7 +47,7 @@ export default function CreatePresentationForm({
   const onSubmit = async (Formdata: PresentationFormData) => {
     setSubmitError("");
     const user = (await supabase.auth.getUser()).data.user;
-    let metadata = user?.user_metadata;
+    const metadata = user?.user_metadata;
     if (!user) {
       setSubmitError("User not authenticated.");
       return;
@@ -74,13 +70,11 @@ export default function CreatePresentationForm({
       EndDateTime.setSeconds(endSeconds);
     }
 
-     if (StartDateTime > EndDateTime){
-      toast("Invalid Presentation Times: Start time must be before end time.")
-     
-      return
-    }
+    if (StartDateTime > EndDateTime) {
+      toast("Invalid Presentation Times: Start time must be before end time.");
 
-     
+      return;
+    }
 
     const { data, error } = await supabase
       .from("presentations")
@@ -103,7 +97,6 @@ export default function CreatePresentationForm({
     } else {
       redirect(`/user/home/mypresentations/${data[0].id}`);
       //redirect(`user/home /presentation/${}`)
-      
     }
   };
 

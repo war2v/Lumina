@@ -1,13 +1,13 @@
 
-import { PresentationType } from "@/app/types";
+import { Presentation } from "@/app/types";
 import { createClient } from "@/lib/supabase/browserClient";
 
 
-export const getPresentationByIdClient = async (id: string): Promise<PresentationType> => {
+export const getPresentationByIdClient = async (id: string): Promise<Presentation> => {
     const supabase = await createClient();
 
 
-    let {data, error} = await supabase
+    const {data, error} = await supabase
         .from('presentations')
         .select('*')
         .eq('id', id);
@@ -18,7 +18,7 @@ export const getPresentationByIdClient = async (id: string): Promise<Presentatio
 
     const {created_at, invite_code, title, description, is_public, created_by, active, created_by_username, current_resource_ID } = data[0];
 
-    const presentation: PresentationType = {
+    const presentation: Presentation = {
         active: active,
         invite_code: invite_code,
         created_at: created_at,

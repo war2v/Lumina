@@ -1,33 +1,43 @@
-import { UUID } from "crypto";
 
-export type PresentationType = {
+export type Resource = {
     id: string;
-    created_at: string;
-    title: string;
-    description: string;
-    is_public: boolean;
-    created_by: string;
-    active: boolean;
-    created_by_username: string;
-    current_resource_id: string;
-    invite_code: string;
-    subtitle: string;
-    co_presenter_ids: JSON;
-    organization_id: string;
-    tags: string;
-    start_datetime: Date;
-    end_datetime: Date;
-    timezone: string;
-    questions_enabled: boolean;
-    languages: string;
-    linked_note_id: string;
+    created_at?: string;
+    file_name: string;
+    file_path: string;
+    file_type?: string;
+    file_size?: string;
+    uploaded_by: string;
+}
+
+
+export type Presentation = {
+    id: string;
+    created_at?: string;
+    title?: string;
+    description?: string;
+    is_public?: boolean;
+    created_by?: string;
+    active?: boolean;
+    created_by_username?: string;
+    current_resource_id?: string;
+    invite_code?: string;
+    subtitle?: string;
+    co_presenter_ids?: JSON;
+    organization_id?: string;
+    tags?: string;
+    start_datetime?: Date;
+    end_datetime?: Date;
+    timezone?: string;
+    questions_enabled?: boolean;
+    languages?: string;
+    linked_note_id?: string;
     
 }
 
 export type PresentationResourceType = {
-    id: Number,
+    id: number,
     created_at: string,
-    presentation_id: Number,
+    presentation_id: number,
     file_name: string,
     file_path: string,
     file_type: string,
@@ -54,8 +64,14 @@ export interface ApiResponse<T> {
     message?: string;
 }
 
-export interface note{
+export interface Note{
     id: string;
+    created_at: Date;
+    user_id?: string;
+    presentation_id?: string;
+    content?: string;
+    updated_at?: string;
+    presentations?: Presentation;
 }
 
 

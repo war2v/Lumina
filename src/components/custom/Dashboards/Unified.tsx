@@ -3,13 +3,13 @@ import { cn } from "@/lib/utils";
 import { NotesContent } from "@/app/user/home/notes/content";
 import PresentationCalendar from "../general/PresentationCalendar";
 import { UserResourceList } from "../general/UserResourceList";
-import { PresentationType } from "@/app/types";
+import { Note, Presentation, Resource } from "@/app/types";
 
 interface Props {
-  resources: any[] | null;
-  presentations: PresentationType[];
+  resources: Resource[] | null;
+  presentations: Presentation[];
   className?: string;
-  notes: any[];
+  notes: Note[];
 }
 
 export const UnifiedDashboard = ({

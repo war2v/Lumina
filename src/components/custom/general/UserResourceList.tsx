@@ -14,17 +14,18 @@ import AddResourceToPresentationModal from "../Modals/AddResourceToPresentationM
 import DeleteResourceModal from "../Modals/DeleteResourceModal";
 import CreateResourceModal from "../Modals/CreateResourceModal";
 import { cn } from "@/lib/utils";
+import { Presentation, Resource } from "@/app/types";
 
 interface Props {
   className?: string;
-  resources: any[] | null;
-  presentations: any[] | null;
+  resources: Resource[] | null;
+  presentations: Presentation[] | null;
 }
 
 export const UserResourceList = ({ className ,resources, presentations }: Props) => {
   if(resources){
     if (resources.length < 50) {
-      for (let i = resources.length; i < 50; i++) resources.push({ id: "" });
+      for (let i = resources.length; i < 50; i++) resources.push({ id: "", file_name: "", file_path: "", uploaded_by: ""});
     }
   }
   const [openCreate, setOpenCreatePresentation] = useState(false);

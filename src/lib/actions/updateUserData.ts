@@ -1,6 +1,5 @@
 import { toast } from "sonner";
 import { Account } from "../queries/server/getAccount";
-import { getUser } from "../supabase/getUserClient";
 import { createClient } from "../supabase/browserClient";
 
 export const UpdateUserData = async (formData: Account, user_id: string) => {

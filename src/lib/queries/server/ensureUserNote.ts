@@ -1,5 +1,6 @@
 import { getUser } from "@/lib/supabase/getUserServer";
 import { createClient } from "@/lib/supabase/serverClient";
+import { toast } from "sonner";
 
 
 export const ensureUserNote = async (presentationId: string) => {
@@ -15,6 +16,10 @@ export const ensureUserNote = async (presentationId: string) => {
     .eq("user_id", user.id)
     .eq("presentation_id", presentationId)
     .single();
+
+  if (fetchError){
+    toast(fetchError.message);
+  }
 
   if (existingNote) return existingNote;
 

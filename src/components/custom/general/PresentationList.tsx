@@ -1,18 +1,19 @@
 "use client";
+import { Presentation } from "@/app/types";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useUser } from "@/hooks/useUser";
 import Link from "next/link";
 
 interface PresentationListProps {
-  presentations: any[] | undefined;
+  presentations: Presentation[] | undefined;
   className?: string;
 }
 const PresentationList = ({
   presentations,
   className,
 }: PresentationListProps) => {
-  const { user } = useUser();
+  
   //console.log(presentations)
 
   return (
@@ -48,7 +49,7 @@ const PresentationList = ({
               </div>
               <div className="flex gap-x-2">
                 <Badge className={`${presentation.active? "bg-success" : "bg-destructive"}`}>{presentation.active? "Active" : "Inactive"}</Badge>
-                <Badge className={`${presentation.public? "bg-success" : "bg-destructive"}`}>{presentation.public? "Public" : "Private"}</Badge>
+                <Badge className={`${presentation.is_public? "bg-success" : "bg-destructive"}`}>{presentation.is_public? "Public" : "Private"}</Badge>
               </div>
             </CardContent>
           </Card>

@@ -11,9 +11,10 @@ import {
 } from "lucide-react";
 import CurrentLocalResource from "./CurrentLocalResource";
 import CurrentResourceViewer from "./CurrentResourceViewer";
+import { Resource } from "@/app/types";
 
 interface SwitcherProps {
-  resources: any[] | null;
+  resources: Resource[] | null;
   id: string;
   projectId: string;
   r_className?: string;
@@ -99,8 +100,6 @@ export const AttendeeSwitcher = ({
               className="h-[400px]"
               title="User"
               resources={resources}
-              current_resource_id={id}
-              presentation_id={projectId}
             />
           </div>
         ) : (

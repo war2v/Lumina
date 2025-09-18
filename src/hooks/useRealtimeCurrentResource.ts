@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/browserClient";
-import { getCurrentResourceId } from "@/lib/queries/client/getCurrentResourceId";
 
 export function useRealtimeCurrentResource(presentationId: string, current_resource_ID: string) {
   const supabase = createClient();
@@ -32,7 +31,7 @@ export function useRealtimeCurrentResource(presentationId: string, current_resou
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [presentationId]);
+  }, [presentationId, supabase]);
 
   return currentResourceId;
 }

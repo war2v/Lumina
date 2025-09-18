@@ -11,6 +11,8 @@ import {
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/browserClient";
+import { Presentation } from "@/app/types";
+import { toast } from "sonner";
 
 export type Resource = {
   id: string;
@@ -30,28 +32,33 @@ export default function AddResourceToPresentationModal({
   onOpenChange: (open: boolean) => void;
   resource_id: string;
   resource_name: string;
-  presentations: any[] | null;
+  presentations: Presentation[] | null;
 }) {
   const [presId, setPresId] = useState("");
-  const [presName, setPresName] = useState("");
+  const [presName, setPresName] = useState<string>();
   ////console.log(resource_id)
 
   const onSubmit = async () => {
     if (presId !== "") {
       const supabase = createClient();
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("resource_associations")
         .insert({
           presentation_id: presentations ? presentations[Number(presId)].id : -1,
           resource_id: resource_id,
         })
         .select();
+
+        if(error){
+          toast(error.message);
+        }
     }
+
   };
 
   useEffect(() => {
-    setPresName(presentations ? presentations[Number(presId)].title : "")
-  }, [presId])
+    setPresName(presentations ? presentations[Number(presId)]?.title : "")
+  }, [presId, presentations])
 
   return (
     <BaseModal

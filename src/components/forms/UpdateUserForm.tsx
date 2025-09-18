@@ -42,7 +42,6 @@ export default function UpdateUserForm({ user, account }: UpdateUserFormProps) {
   const router = useRouter();
   const {
     getValues,
-    watch,
     register,
     handleSubmit,
     formState: { errors, isSubmitting },

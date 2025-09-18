@@ -1,27 +1,26 @@
-"use client"
-import { useQRCode } from 'next-qrcode'
+"use client";
 
-export function QRJoinCode({ joinCode, presentation_id }: { joinCode: string, presentation_id: string }) {
+import { QRCodeSVG } from "qrcode.react";
+
+export function QRJoinCode({
+  joinCode,
+  presentation_id,
+}: {
+  joinCode: string;
+  presentation_id: string;
+}) {
   const joinUrl = `${process.env.NEXT_PUBLIC_DOMAIN}/user/presentation/${presentation_id}/${joinCode}`;
-  const { Canvas } = useQRCode();
 
   return (
-    <div>
-        <Canvas
-            text={joinUrl}
-            options={{
-                errorCorrectionLevel: 'M',
-                margin: 3,
-                scale: 4,
-                width: 75,
-                color: {
-                dark: '#010599FF',
-                light: '#FFBF60FF',
-                },
-            }}
-        />
-
-    
+    <div className="flex flex-col items-center">
+      <QRCodeSVG
+        value={joinUrl}
+        level="M"
+        size={75}
+        bgColor="#FFBF60FF"
+        fgColor="#010599FF"
+        includeMargin={true}
+      />
       <p className="mt-2 text-sm text-gray-500">Scan to join</p>
     </div>
   );

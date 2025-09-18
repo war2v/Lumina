@@ -1,7 +1,6 @@
 import { createClient } from "@/lib/supabase/serverClient";
 import SignInForm from "../_components/SignInForm";
 import { redirect } from "next/navigation";
-import Footer from "../_components/Footer";
 
 const SignInPage = async () => {
   const supabase = await createClient();

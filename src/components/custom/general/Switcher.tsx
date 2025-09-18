@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { FullscreenIcon, ImageIcon, NotebookIcon } from "lucide-react";
 import { QRJoinCode } from "./QRcode";
+import { Resource } from "@/app/types";
 
 interface SwitcherProps {
-  resources: any[] | null; 
+  resources: Resource[] | null; 
   id: string;
   projectId: string;
   joinCode: string;
@@ -72,7 +73,7 @@ export const Switcher = ({resources, id, projectId, joinCode}: SwitcherProps) =>
                 {
                 current === "resources" ? 
                     <div className={`w-full h-full`}>
-                        <CurrentResource className={`h-[500px] ${isFullscreen ? "h-screen" : ""}`}  resources={resources} id={id} projectId={projectId} joinCode={joinCode} />
+                        <CurrentResource className={`h-[500px] ${isFullscreen ? "h-screen" : ""}`}  resources={resources} id={id} projectId={projectId} />
                     </div>
                 :
                     <div className={`h-[500px] w-full ${isFullscreen ? "h-full w-full" : ""}`}>

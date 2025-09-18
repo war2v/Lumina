@@ -1,14 +1,16 @@
-import { PresentationType } from "@/app/types";
+
+import { Note } from "@/app/types";
 import { getUser } from "@/lib/supabase/getUserServer";
 import { createClient } from "@/lib/supabase/serverClient";
 import { redirect } from "next/navigation";
-import { toast } from "sonner";
 
 
-export const getUserNotes = async (): Promise<any> => {
+
+export const getUserNotes = async () => {
     const supabase = await createClient();
 
     const { user }  = await getUser()
+    
 
     
     if (!user){
@@ -16,26 +18,40 @@ export const getUserNotes = async (): Promise<any> => {
     }
 
     
-    let {data, error} = await supabase
+    const {data, error} = await supabase
         .from('notes')
         .select(`
             id,
-            user_id, 
-            presentation_id, 
-            content,
+            created_at,
             presentations (
-                title,
-                created_by_username
-            ) 
+                id,
+                title
+            ),
+            content,
+            updated_at
             `)
         .eq('user_id', user.id);
     
+    
     if (error || !data) {
-        console.log(error?.message)
+        //console.log(error?.message)
         return []
     }
     
-    return data
+    //console.log(data)
+
+    let notes: Note[] = []
+
+    for(let i = 0; i < data.length; i++){
+        notes.push({
+           id: data[i]?.id, 
+           created_at: data[i]?.created_at,
+           content: data[i]?.content,
+           updated_at: data[i]?.updated_at
+        })
+    }
+
+    return notes
    
     
 

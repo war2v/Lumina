@@ -1,7 +1,6 @@
 
-import { PresentationType } from "@/app/types";
 import { createClient } from "@/lib/supabase/browserClient";
-import { Presentation } from "lucide-react";
+
 
 
 export const getCurrentResourceId = async (presentation_id: string) => {

@@ -1,6 +1,7 @@
+import { Resource } from "@/app/types";
 import Image from "next/image";
 
-export const renderResource = (currentResource: any) => {
+export const renderResource = (currentResource: Resource) => {
   if (!currentResource) {
     return <p className="text-muted-foreground">No resource selected.</p>;
   }

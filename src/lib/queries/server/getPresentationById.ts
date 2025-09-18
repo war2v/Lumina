@@ -1,13 +1,13 @@
-import { PresentationType } from "@/app/types";
+import { Presentation } from "@/app/types";
 import { createClient } from "@/lib/supabase/serverClient";
-import { Presentation, Tags } from "lucide-react";
 
 
-export const getPresentationById = async (id: string): Promise<PresentationType> => {
+
+export const getPresentationById = async (id: string): Promise<Presentation> => {
     const supabase = await createClient();
 
 
-    let {data, error} = await supabase
+    const {data, error} = await supabase
         .from('presentations')
         .select('*')
         .eq('id', id);
@@ -16,7 +16,7 @@ export const getPresentationById = async (id: string): Promise<PresentationType>
         throw new Error(error.message)
     }
     if (!data){
-        return <PresentationType>{
+        return <Presentation>{
             active: false,
             created_at:"" ,
             created_by:"" ,
@@ -31,7 +31,7 @@ export const getPresentationById = async (id: string): Promise<PresentationType>
     
     const {created_at, tags, start_datetime, end_datetime, current_resource_id, invite_code, title, description, is_public, created_by, created_by_username, active } = data[0];
    
-       const presentation: PresentationType = {
+       const presentation: Presentation = {
            active: active,
            created_at: created_at,
            created_by: created_by,

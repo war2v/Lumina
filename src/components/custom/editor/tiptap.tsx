@@ -86,22 +86,14 @@ const fontSizes = [
 
 const textAlign = ["left", "center", "right", "justify"];
 
-const bgColor = [
-  "#B9F18D",
-  "#94FADB",
-  "#70CFF8",
-  "#FAF594",
-  "#FBBC88",
-  "#F98181",
-  "#958DF1",
-];
+
 
 export const TipTap = ({ className, editorClassName, noteId }: TipTapProps) => {
   const [bold, toggleBold] = useState(false);
   const [italic, toggleItalic] = useState(false);
   const [underline, toggleUnderline] = useState(false);
   const [strike, toggleStrike] = useState(false);
-  const [menuCollasped, setMenuCollapsed] = useState<boolean>(false);
+
 
 
   const editor = useEditor({
@@ -140,7 +132,7 @@ export const TipTap = ({ className, editorClassName, noteId }: TipTapProps) => {
     
     const supabase = createClient();
 
-    const {data, error} = await supabase
+    const {error} = await supabase
       .from('notes')
       .update({'content': json})
       .eq('id', noteId)

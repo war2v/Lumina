@@ -8,7 +8,7 @@ export default function ToggleIsPublicButton({
   initialState,
   presentationId,
 }: {
-  initialState: boolean;
+  initialState?: boolean;
   presentationId: string;
 }) {
   const [isPublic, setIsPublic] = useState(initialState);
@@ -17,8 +17,10 @@ export default function ToggleIsPublicButton({
   const handleClick = async () => {
     try {
       setIsLoading(true);
-      const newState = await toggleIsPublic(presentationId, isPublic);
-      setIsPublic(newState);
+      if(isPublic){
+        const newState = await toggleIsPublic(presentationId, isPublic);
+        setIsPublic(newState);
+      }
     } catch (err) {
       console.error("Failed to toggle active state:", err);
     } finally {

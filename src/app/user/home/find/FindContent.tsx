@@ -1,11 +1,12 @@
 "use client";
+import { Presentation } from "@/app/types";
 import { Container } from "@/components/custom/general/Contatiner";
 import PresentationList from "@/components/custom/general/PresentationList"
 import SearchBar from "@/components/custom/general/SearchBar"
 import { useState } from "react";
 
 interface FindContentProps {
-  presentations: any[] | null;
+  presentations: Presentation[] | null;
 }
 
 export const FindContent = ({ presentations }: FindContentProps) => {

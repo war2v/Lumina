@@ -5,21 +5,21 @@ import Image from "next/image";
 import { useState } from "react";
 import PDFViewer from "./PDFviewer";
 import { renderResource } from "./renderResource";
+import { Resource } from "@/app/types";
 
 interface CurrentResourceProps {
-  resources: any[] | null;
-  presentation_id: string;
-  current_resource_id: string;
+  resources: Resource[] | null;
   title: string;
   className?: string;
 }
 const CurrentLocalResource = ({
   resources,
   title,
-  presentation_id,
-  current_resource_id,
   className
 }: CurrentResourceProps) => {
+
+   const [localId, setLocalId] = useState(0);
+   
   if (!resources) {
     return (
       <Card>
@@ -33,47 +33,10 @@ const CurrentLocalResource = ({
     );
   }
 
-  const [localId, setLocalId] = useState(0);
+ 
 
   const userCurrentResource = resources[localId];
 
-  const renderLocalResource = () => {
-    if (userCurrentResource) {
-      switch (userCurrentResource.file_type) {
-        case "image/jpeg":
-          return (
-            <Image
-              src={
-                process.env.NEXT_PUBLIC_SUPABASE_PRESENTATION_RESOURCES_URL +
-                userCurrentResource.file_path
-              }
-              alt={userCurrentResource.file_name}
-              width={800}
-              height={600}
-              className="rounded border"
-            />
-          );
-        case "application/pdf":
-          return (
-            <PDFViewer
-              url={
-                process.env.NEXT_PUBLIC_SUPABASE_PRESENTATION_RESOURCES_URL +
-                userCurrentResource.file_path
-              }
-            />
-          );
-        default:
-          return (
-            <p className="text-muted-foreground">
-              Cannot preview this file type.
-            </p>
-          );
-      }
-    }
-    return (
-      <p className="text-muted-foreground">Cannot preview this file type.</p>
-    );
-  };
 
   return (
     <Card>

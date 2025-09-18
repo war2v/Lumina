@@ -1,5 +1,6 @@
 "use client";
 
+import { Note } from "@/app/types";
 import SimpleSearchBar from "@/components/custom/general/SimpleSearchBar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -11,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface NotesContentProps {
-  notes: any[];
+  notes: Note[];
   className?: string;
   listClassName?: string;
 }
@@ -25,10 +26,13 @@ export const NotesContent = ({
   const [query, setQuery] = useState<string>("");
   const filtered = notes
 
+  console.log(filtered)
+
   //console.log(notes)
   const createNote = async () => {
     const supabase = await createClient();
     const { user } = await getUser();
+    
 
     const { data, error } = await supabase
       .from("notes")
@@ -63,7 +67,7 @@ export const NotesContent = ({
           listClassName
         )}
       >
-        {filtered?.map((item: any, index: number) => (
+        {filtered?.map((item: Note, index: number) => (
           <Link
             href={`notes/${item.id}`}
             className="flex items-center justify-center"

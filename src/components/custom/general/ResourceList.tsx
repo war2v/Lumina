@@ -1,18 +1,18 @@
 "use client";
 import { download } from "@/lib/actions/downloadFile";
-import { PresentationResourceType } from "@/app/types";
+import { Resource } from "@/app/types";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Download } from "lucide-react";
 
 interface ResourceListProps {
-  resources: PresentationResourceType[] | null;
+  resources: Resource[] | null;
   className?: string;
   rl_className?: string;
 }
 const ResourceList = ({ resources, className, rl_className }: ResourceListProps) => {
-  const handleDownload = async (url: string, file_name: string) => {
-    const { data, error } = await download(url, file_name);
+  const handleDownload = async (url: string) => {
+    const { data, error } = await download(url);
     if (error || data == null) {
       return;
     }
@@ -54,7 +54,7 @@ const ResourceList = ({ resources, className, rl_className }: ResourceListProps)
             <span className="overflow-hidden">{resource.file_name}</span>
             <Button
               onClick={() =>
-                handleDownload(resource.file_path, resource.file_name)
+                handleDownload(resource.file_path)
               }
               variant="ghost"
               size="sm"

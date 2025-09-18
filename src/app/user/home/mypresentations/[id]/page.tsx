@@ -3,7 +3,7 @@ import Header from "@/components/custom/general/ProjectHeader";
 import Description from "@/components/custom/general/Description";
 import ResourceList from "@/components/custom/general/ResourceList";
 import { getUserPresentationsById } from "@/lib/queries/server/getUserPresentationById";
-import { PresentationType } from "@/app/types";
+import { Presentation } from "@/app/types";
 import { getResourcesById } from "@/lib/queries/server/getResources";
 import { Switcher } from "@/components/custom/general/Switcher";
 
@@ -27,7 +27,7 @@ export default async function PresentationPage({
     start_datetime,
     end_datetime,
   } = await getUserPresentationsById(id);
-  const presentatation: PresentationType = {
+  const presentatation: Presentation = {
     id,
     active,
     created_at,
@@ -44,8 +44,6 @@ export default async function PresentationPage({
   };
   const resources = await getResourcesById(id);
 
-  const current_resource = current_resource_id;
-
   ////console.log(new Date(presentatation.start_datetime).toDateString());
 
   return (
@@ -54,32 +52,43 @@ export default async function PresentationPage({
       <Header presentation={presentatation} />
 
       <div className="grid lg:grid-cols-7 md:grid-cols-1 md:gap-y-2 h-full  justify-center w-full gap-x-2">
-
         <div className="col-span-3 h-full md:flex lg:hidden">
-           <Switcher id={presentatation.current_resource_id} resources={resources} projectId={id} joinCode={presentatation.invite_code} />
+          <Switcher
+            id={presentatation.current_resource_id ? presentatation.current_resource_id : "-1"}
+            resources={resources}
+            projectId={id}
+            joinCode={presentatation.invite_code ? presentatation.invite_code : ""}
+          />
         </div>
         <div className="flex flex-col gap-y-2 col-span-2">
-           <Description
+          <Description
             description={description}
             tags={tags}
             date={start_datetime}
             endDate={end_datetime}
-            shareLink={`${presentatation.invite_code}`} 
-            id={id} 
+            shareLink={`${presentatation.invite_code}`}
+            id={id}
           />
-          <ResourceList className="h-[263px] overflow-hidden" rl_className="h-[260px] overflow-scroll mb-2"   resources={resources} />
+          <ResourceList
+            className="h-[263px] overflow-hidden"
+            rl_className="h-[260px] overflow-scroll mb-2"
+            resources={resources}
+          />
         </div>
-        
+
         {/* Current Slide/Resource Preview */}
         <div className="col-span-3 h-full md:hidden lg:flex">
-           <Switcher id={presentatation.current_resource_id} resources={resources} projectId={id} joinCode={presentatation.invite_code} />
+          <Switcher
+            id={presentatation.current_resource_id ? presentatation.current_resource_id : "-1"}
+            resources={resources}
+            projectId={id}
+            joinCode={presentatation.invite_code ? presentatation.invite_code : ""}
+          />
         </div>
         <div className="col-span-2">
           <AnalyticsCard />
         </div>
-        
       </div>
-      
     </div>
   );
 }

@@ -3,11 +3,12 @@ import { useState } from "react"
 import SimpleSearchBar from "../general/SimpleSearchBar"
 import MyPresentationList from "../general/MyPresentationList"
 import { cn } from "@/lib/tiptap-utils";
+import { Presentation } from "@/app/types";
 
 
 
 interface SearchComponentProps {
-    presentations: any[] | null,
+    presentations: Presentation[] | null,
     className?: string;
     listClassName?: string;
 }
@@ -15,7 +16,7 @@ export const SearchComponent = ({presentations, className, listClassName}: Searc
     const [query, setQuery] = useState<string>("");
 
     const filtered = presentations?.filter(p =>
-        p.title.toLowerCase().includes(query.toLowerCase())
+        p.title ? p.title.toLowerCase().includes(query.toLowerCase()) : ""
     )
 
     return (

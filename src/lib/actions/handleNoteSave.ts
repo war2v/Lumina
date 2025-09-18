@@ -1,13 +1,15 @@
 import { getUser } from "@/lib/supabase/getUserServer";
 import { SupabaseClient } from "@supabase/supabase-js";
+import { createClient } from "../supabase/browserClient";
 
 export interface HandleSaveProps {
-    supabase: SupabaseClient<any, "public", any>,
     presentationId: string,
     content: string,
 }
 
-export async function handleSave({supabase, presentationId, content}: HandleSaveProps) {
+export async function handleSave({presentationId, content}: HandleSaveProps) {
+
+    const supabase = createClient();
 
     const {user} = await getUser()
     if (!user) return;

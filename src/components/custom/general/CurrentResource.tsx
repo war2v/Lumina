@@ -6,22 +6,49 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { setCurrentResource } from "@/lib/actions/setCurrentResource";
 import { useRouter } from "next/navigation";
 import { renderResource } from "./renderResource";
+import { Resource } from "@/app/types";
 
 
 interface CurrentResourceProps {
-  resources: any[] | null; 
+  resources: Resource[] | null; 
   id: string;
   projectId: string;
-  joinCode: string;
   className?: string;
 }
 const CurrentResource = ({
   resources,
   id,
   projectId,
-  joinCode,
   className,
 }: CurrentResourceProps) => {
+
+  const router = useRouter();
+ 
+
+  
+
+  const incrementCurrentResourceItem = () => {
+    if(resources){
+      if (Number(id) === resources.length - 1) {
+        setCurrentResource("0", projectId);
+      } else {
+        setCurrentResource((Number(id) + 1).toString(), projectId);
+      }
+      router.refresh();
+      }
+  };
+
+  const decrementCurrentResourceItem = () => {
+    if(resources){
+      if (Number(id) === 0) {
+        setCurrentResource((resources.length - 1).toString(), projectId);
+      } else {
+        setCurrentResource((Number(id) - 1).toString(), projectId);
+      }
+      router.refresh();
+    }
+  };
+
   if (!resources || resources.length === 0) {
     return (
       <Card>
@@ -35,31 +62,11 @@ const CurrentResource = ({
     );
   }
 
+   const currentResource = resources[Number(id)];
  
   
 
-  const router = useRouter();
-  const currentResource = resources[Number(id)];
-
   
-
-  const incrementCurrentResourceItem = () => {
-    if (Number(id) === resources.length - 1) {
-      setCurrentResource("0", projectId);
-    } else {
-      setCurrentResource((Number(id) + 1).toString(), projectId);
-    }
-    router.refresh();
-  };
-
-  const decrementCurrentResourceItem = () => {
-    if (Number(id) === 0) {
-      setCurrentResource((resources.length - 1).toString(), projectId);
-    } else {
-      setCurrentResource((Number(id) - 1).toString(), projectId);
-    }
-    router.refresh();
-  };
 
 
   

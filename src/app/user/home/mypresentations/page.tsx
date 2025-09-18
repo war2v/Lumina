@@ -1,7 +1,7 @@
 import { getUserPresentations } from "@/lib/queries/server/getUserPresentations";
 import { Container } from "@/components/custom/general/Contatiner";
 import MyPresentationList from "@/components/custom/general/MyPresentationList";
-import { MyPresentationTypeSelector } from "@/components/custom/myPresentationDashboard/MyPresentationTypeSelector";
+import { MyPresentationSelector } from "@/components/custom/myPresentationDashboard/MyPresentationTypeSelector";
 import { SearchComponent } from "@/components/custom/myPresentationDashboard/SearchComponent";
 import { Badge } from "@/components/ui/badge";
 import PresentationCalendar from "@/components/custom/general/PresentationCalendar";
@@ -46,7 +46,6 @@ const MyPresentations = async () => {
           </Badge>
         </div>
         <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-2 h-full">
-          
           <div className="h-full">
             <PresentationCalendar presentations={presentations} />
           </div>
@@ -80,7 +79,7 @@ const MyPresentations = async () => {
               </Badge>
             </div>
             <div className="w-full grid grid-cols-1 items-start gap-x-4">
-              <MyPresentationTypeSelector
+              <MyPresentationSelector
                 public_presentations={groupedP[1]}
                 private_presentations={groupedP[0]}
               />

@@ -1,9 +1,9 @@
 "use client";
 
-import { PresentationType } from "@/app/types";
+import { Presentation, Resource } from "@/app/types";
 import { Button } from "@/components/ui/button";
 import EditPresentationModal from "@/components/custom/Modals/EditPresentationModal";
-import { Link2,  Pencil, Trash } from "lucide-react";
+import { Link2, Pencil, Trash } from "lucide-react";
 import { useState } from "react";
 import TogglePresentationButton from "./togglePresentationButton";
 import ToggleIsPublicButton from "./toggleIsPublicButton";
@@ -17,18 +17,18 @@ import {
 } from "@/components/ui/hover-card";
 
 interface HeaderProps {
-  presentation: PresentationType;
+  presentation: Presentation;
 }
 
 const Header = ({ presentation }: HeaderProps) => {
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [linkResource, setLinkResource] = useState(false);
-  const [resources, setResources] = useState<any[] | null>();
+  const [resources, setResources] = useState<Resource[] | undefined>([]);
 
   const openLinkResource = async () => {
-    const resource = await getResourcesById(presentation.id);
-    setResources(resource);
+    const resource_list = await getResourcesById(presentation.id);
+    setResources(resource_list);
     setLinkResource(true);
   };
 
@@ -60,7 +60,6 @@ const Header = ({ presentation }: HeaderProps) => {
           presentationId={presentation.id}
         />
         <Button
-                
           size="sm"
           variant="editor"
           className="bg-red-500"
@@ -69,15 +68,13 @@ const Header = ({ presentation }: HeaderProps) => {
           <span className="md:hidden lg:flex">Delete</span>
           <Trash />
         </Button>
-        
-        
 
         <EditPresentationModal
           open={open}
           onOpenChange={setOpen}
           presentationId={presentation.id}
           initialData={{
-            title: presentation.title,
+            title: presentation.title ? presentation.title : "",
             description: presentation.description,
             tags: presentation.tags,
           }}
@@ -88,7 +85,7 @@ const Header = ({ presentation }: HeaderProps) => {
           open={openDelete}
           onOpenChange={setOpenDelete}
         />
-        
+
         <LinkResourceModal
           presentation_title={presentation.title}
           resources={resources}

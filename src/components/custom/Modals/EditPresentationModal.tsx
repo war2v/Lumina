@@ -14,6 +14,7 @@ import {  Upload } from "lucide-react";
 import BaseModal from "./BaseModal";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
+import { toast } from "sonner";
 
 const schema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -42,7 +43,7 @@ export default function EditPresentationModal({
   initialData: { title: string; description?: string, tags?: string };
   presentationId: string;
 }) {
-  const {user, loading} = useUser();
+  const {user} = useUser();
   const router = useRouter();
   const supabase = createClient();
   const [message, setMessage] = useState("");
@@ -101,7 +102,12 @@ export default function EditPresentationModal({
             })
             .select()
             .single();
-          if (insertError) throw insertError;
+
+          if (insertError) {
+            toast(insertError.message);
+            break;
+          };
+
           if (inserted) uploadedResources.push(inserted); 
           const { data, error } = await supabase
             .from("resource_associations")
@@ -110,6 +116,11 @@ export default function EditPresentationModal({
               "resource_id": inserted.id,
             })
           
+            if(error){
+              toast(error.message)
+              break;
+            }
+          
         }
         
       }
@@ -117,8 +128,8 @@ export default function EditPresentationModal({
       setMessage("Changes saved.");
       onOpenChange(false);
       router.refresh()
-    } catch (err: any) {
-      setMessage(`Error: ${err.message}`);
+    } catch (error: unknown) {
+      setMessage(`Error: ${error}`);
     }
   };
 

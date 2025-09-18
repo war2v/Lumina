@@ -3,8 +3,9 @@ import { SearchComponent } from "../myPresentationDashboard/SearchComponent"
 import { useState } from "react";
 import CreatePresentationModal from "../Modals/CreatePresentationModal";
 import { UserResourceList } from "../general/UserResourceList";
+import { Presentation, Resource } from "@/app/types";
 
-export const PresenterDashboard = ({className, resources, presentations}: {className?: string, resources: any[] | null, presentations: any[] | null}) => {
+export const PresenterDashboard = ({className, resources, presentations}: {className?: string, resources: Resource[] | null, presentations: Presentation[] | null}) => {
     const [createPresModal, openCreatePresModal] = useState(false);
 
 

@@ -7,19 +7,18 @@ import Link from "next/link";
 import DeletePresentationModal from "../Modals/DeletePresentationModal";
 import EditPresentationModal from "../Modals/EditPresentationModal";
 import { useState } from "react";
+import { Presentation } from "@/app/types";
 
 interface PresentationListProps {
-  presentations: any[] | null;
+  presentations: Presentation[] | null;
   className?: string;
-  height?: number;
 }
-const MyPresentationList = ({ presentations, className, height = 300 }: PresentationListProps) => {
+const MyPresentationList = ({ presentations, className}: PresentationListProps) => {
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const [linkResource, setLinkResource] = useState(false);
   const [presentationId, setPresentationId] = useState("");
   console.log( presentations ? presentations[Number(presentationId)]?.title : "")
-  const setId = (index:Number) => {
+  const setId = (index:number) => {
     setPresentationId(index.toString()); 
     setOpen(true)
   }
@@ -48,7 +47,7 @@ const MyPresentationList = ({ presentations, className, height = 300 }: Presenta
               <h1>{presentation.description}</h1>
               <div className="flex gap-x-2">
                 <Badge className={`${presentation.active? "bg-success" : "bg-destructive"}`}>{presentation.active? "Active" : "Inactive"}</Badge>
-                <Badge className={`${presentation.public? "bg-success" : "bg-destructive"}`}>{presentation.public? "Public" : "Private"}</Badge>
+                <Badge className={`${presentation.is_public? "bg-success" : "bg-destructive"}`}>{presentation.is_public? "Public" : "Private"}</Badge>
                 <Button onClick={() => {setId(index)}}>
                   Edit <Edit/>
                 </Button>
