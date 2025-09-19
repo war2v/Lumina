@@ -12,11 +12,11 @@ const ViewerPresentationPage = async ({
   params,
   searchParams,
 }: {
-  params: { id: string };
-  searchParams: { code?: string };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ code?: string }>;
 }) => {
-  const { id } = params;
-  const { code: providedCode } = searchParams;
+  const { id } = await params;
+  const { code: providedCode } = await searchParams;
 
   const presentation = await getPresentationById(id.toString());
   const resources = await getResourcesById(id.toString());
