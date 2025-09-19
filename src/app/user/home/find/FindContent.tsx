@@ -13,7 +13,7 @@ export const FindContent = ({ presentations }: FindContentProps) => {
     const [query, setQuery] = useState("");
     
     const filtered = presentations?.filter(p =>
-        p.title.toLowerCase().includes(query.toLowerCase())
+        p.title?.toLowerCase().includes(query.toLowerCase())
     )
 
     return (
