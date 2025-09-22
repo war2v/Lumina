@@ -7,7 +7,7 @@ export const ensureUserNote = async (presentationId: string) => {
 
   const { user } = await getUser();
 
-  if ( !user ) throw new Error("Not authenticated");
+  if ( user === null ) throw new Error("Not authenticated");
 
   const { data: existingNote, error: fetchError } = await supabase
     .from("notes")

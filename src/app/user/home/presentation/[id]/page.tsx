@@ -16,6 +16,7 @@ const ViewerPresentationPage = async ({
   searchParams: Promise<{ code?: string }>;
 }) => {
   const { id } = await params;
+  console.log(id)
   const { code: providedCode } = await searchParams;
 
   const presentation = await getPresentationById(id.toString());
