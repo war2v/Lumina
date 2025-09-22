@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { togglePresentationActive } from "@/lib/actions/toggleActivePresentation";
 
 export default function TogglePresentationButton({
-  initialState,
+  initialState = false,
   presentationId,
 }: {
   initialState?: boolean;
@@ -17,10 +17,10 @@ export default function TogglePresentationButton({
   const handleClick = async () => {
     try {
       setIsLoading(true);
-      if(isActive){
+      
         const newState = await togglePresentationActive(presentationId, isActive);
         setIsActive(newState);
-      }
+      
       
       
     } catch (err) {

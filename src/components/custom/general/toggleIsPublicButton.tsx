@@ -5,22 +5,22 @@ import { Button } from "@/components/ui/button";
 import { toggleIsPublic } from "@/lib/actions/toggleIsPublic";
 
 export default function ToggleIsPublicButton({
-  initialState,
+  initialState = false,
   presentationId,
 }: {
   initialState?: boolean;
   presentationId: string;
 }) {
-  const [isPublic, setIsPublic] = useState(initialState);
+  const [isPublic, setIsPublic] = useState<boolean>(initialState);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClick = async () => {
     try {
       setIsLoading(true);
-      if(isPublic){
-        const newState = await toggleIsPublic(presentationId, isPublic);
-        setIsPublic(newState);
-      }
+      
+      const newState = await toggleIsPublic(presentationId, isPublic);
+      setIsPublic(newState);
+      
     } catch (err) {
       console.error("Failed to toggle active state:", err);
     } finally {
