@@ -1,6 +1,5 @@
 import { getUser } from "@/lib/supabase/getUserServer";
 import { createClient } from "@/lib/supabase/serverClient";
-import { toast } from "sonner";
 
 
 export const ensureUserNote = async (presentationId: string) => {
