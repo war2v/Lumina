@@ -18,7 +18,7 @@ export const ensureUserNote = async (presentationId: string) => {
     .single();
 
   if (fetchError){
-    toast(fetchError.message);
+    console.log(fetchError)
   }
 
   if (existingNote) return existingNote;
