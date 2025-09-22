@@ -1,8 +1,16 @@
+import { getUser } from "@/lib/supabase/getUserServer";
 import { FindContent } from "./FindContent";
 import { getAllPresentationsNotUsers } from "@/lib/queries/server/getAllPresentationsNotUsers";
 
 export default async function SearchPage() {
-  const presentations = await getAllPresentationsNotUsers();
+  const {user} = await getUser()
+  if(user){
+    const presentations = await getAllPresentationsNotUsers(user);
+    return <FindContent presentations={presentations} />;
+  }
+  
   ////console.log(presentations)
-  return <FindContent presentations={presentations} />;
+  return <div>No Presentation's</div>
+
+  
 }

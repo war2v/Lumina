@@ -1,12 +1,11 @@
 
 import { Presentation } from "@/app/types";
-import { getUser } from "@/lib/supabase/getUserServer";
 import { createClient } from "@/lib/supabase/serverClient";
+import { User } from "@supabase/supabase-js";
 
 
-export const getAllPresentationsNotUsers = async () => {
+export const getAllPresentationsNotUsers = async (user: User) => {
     const supabase = await createClient();
-    const {user} = await getUser();
 
     const {data, error} = await supabase
         .from('presentations')
