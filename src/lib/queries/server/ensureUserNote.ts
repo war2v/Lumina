@@ -32,7 +32,7 @@ export const ensureUserNote = async (presentationId: string) => {
     .select()
     .single();
 
-  if (insertError) throw new Error(insertError.message);
+  if (insertError) {console.log(insertError); return []}
 
   return newNote;
 };

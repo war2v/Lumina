@@ -7,7 +7,7 @@ export const getUser = async () => {
         data: { user },
     } = await supabase.auth.getUser();
 
-
+ 
     
 
     return { user }
