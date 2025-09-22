@@ -14,7 +14,7 @@ export const getAllPresentationsNotUsers = async () => {
         .neq('created_by', user?.id);
     
     if (error) {
-        throw new Error('Error Fetchin Data.')
+        console.log(error)
     }
     
     const pres_data: Presentation[] = [];
