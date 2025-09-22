@@ -9,7 +9,7 @@ export function QRJoinCode({
   joinCode: string;
   presentation_id: string;
 }) {
-  const joinUrl = `${process.env.NEXT_PUBLIC_DOMAIN}/user/presentation/${presentation_id}/${joinCode}`;
+  const joinUrl = `${process.env.NEXT_PUBLIC_DOMAIN}user/presentation/${presentation_id}/${joinCode}`;
 
   return (
     <div className="flex flex-col items-center">
