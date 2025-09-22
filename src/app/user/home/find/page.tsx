@@ -10,7 +10,7 @@ export default async function SearchPage() {
   }
   
   ////console.log(presentations)
-  return <div>No Presentation's</div>
+  return <div>No Presentation&apos;s</div>
 
   
 }
