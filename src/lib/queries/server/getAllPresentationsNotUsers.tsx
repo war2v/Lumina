@@ -6,7 +6,9 @@ import { User } from "@supabase/supabase-js";
 
 export const getAllPresentationsNotUsers = async (user: User) => {
     const supabase = await createClient();
-
+    if(!user.id){
+        return []
+    }
     const {data, error} = await supabase
         .from('presentations')
         .select('*')
