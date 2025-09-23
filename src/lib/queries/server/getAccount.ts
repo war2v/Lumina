@@ -24,8 +24,18 @@ export const getAccount = async () => {
     }
 
     if ( !data || data.length === 0 ) {
-        console.log(data)
-        return null
+        data.push(
+            {
+        id: "id",
+        created_at: "",
+        username: "",
+        first_name: "",
+        last_name: "",
+        role: '',
+        updated_at: "",
+        profile_image_url: "",
+        bio: "", }
+        )
     }
 
 

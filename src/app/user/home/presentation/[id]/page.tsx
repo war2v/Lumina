@@ -39,7 +39,7 @@ const ViewerPresentationPage = async ({
         <h1 className="text-sm">{presentation.created_by_username}</h1>
         <h1 className="text-sm">{presentation.description}</h1>
       </div>
-      <div className="grid grid-cols-2 gap-4 h-full w-full">
+      <div className="grid grid-cols-2 sm:grid-cols-1 gap-4 h-full w-full">
           
           <div className="h-[730px] w-full">
             <NoteEditor className="h-full" initialValue={userNote ? userNote.content : ""} />
