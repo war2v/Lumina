@@ -33,7 +33,7 @@ const ViewerPresentationPage = async ({
   }
 
   return (
-    <Container className="gap-y-4 p-4 w-full">
+    <Container className="flex flex-col gap-y-4 p-4 ">
       <div className="flex flex-col justify-between  px-3 text-muted-foreground font-semibold">
         <h1 className="text-2xl dark:text-white">{presentation.title}</h1>
         <h1 className="text-sm">{presentation.created_by_username}</h1>
@@ -41,17 +41,17 @@ const ViewerPresentationPage = async ({
       </div>
       <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-4 h-full w-full">
           
-          <div className="h-[730px] w-full">
-            <NoteEditor className="h-full" initialValue={userNote ? userNote.content : ""} />
-          </div>
-          <div className="grid h-[600px] lg:grid-cols-1  gap-x-4 md:gap-y-4">
-            <AttendeeSwitcher r_className="h-[600px]" resources={resources} id={current_resource_id} projectId={presentation.id} />
-          </div>
-          
+        
+          <NoteEditor className="h-[600px] md:w-full w-[200px] " initialValue={userNote ? userNote.content : ""} />
+        
+        
+          <AttendeeSwitcher r_className="h-[600px] sm:max-w-xs" resources={resources} id={current_resource_id} projectId={presentation.id} />
+        
+        
+      </div>
+      <div className="w-full py-4">
+          <ResourceList className="w-full" resources={resources} />
         </div>
-        <div className="w-full py-4">
-            <ResourceList className="w-full" resources={resources} />
-          </div>
     </Container>
   );
 };
