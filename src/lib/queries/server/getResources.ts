@@ -1,20 +1,12 @@
 
 import { Resource } from "@/app/types";
-import { getUser } from "@/lib/supabase/getUserServer";
 import { createClient } from "@/lib/supabase/serverClient";
-import { redirect } from "next/navigation";
 import { toast } from "sonner";
 
 
 
 export const getResourcesById = async (presentation_id: string) => {
     const supabase = await createClient();
-
-    const { user }  = await getUser()
-
-    if (!user){
-        redirect("/sign-in")
-    }
 
     const {data, error} = await supabase
         .from('resource_associations')

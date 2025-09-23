@@ -17,7 +17,7 @@ const Description = ({description, tags, date, endDate, id, shareLink}: Descript
     const [copied, setCopied] = useState(false);
 
     const handleCopy = () => {
-        navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_DOMAIN}/user/home/presentation/${id}?code=${shareLink}`);
+        navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_DOMAIN}user/home/presentation/${id}?code=${shareLink}`);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };

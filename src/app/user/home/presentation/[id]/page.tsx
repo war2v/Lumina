@@ -16,8 +16,6 @@ const ViewerPresentationPage = async ({
   searchParams: Promise<{ code?: string }>;
 }) => {
   const { id } = await params;
-  console.log(id)
-  if(!id) redirect('/')
   const { code: providedCode } = await searchParams;
 
   const presentation = await getPresentationById(id.toString());
@@ -44,7 +42,7 @@ const ViewerPresentationPage = async ({
       <div className="grid grid-cols-2 gap-4 h-full w-full">
           
           <div className="h-[730px] w-full">
-            <NoteEditor className="h-full" initialValue={userNote.content} />
+            <NoteEditor className="h-full" initialValue={userNote ? userNote.content : ""} />
           </div>
           <div className="grid h-[600px] lg:grid-cols-1  gap-x-4 md:gap-y-4">
             <AttendeeSwitcher r_className="h-[600px]" resources={resources} id={current_resource_id} projectId={presentation.id} />

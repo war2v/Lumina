@@ -50,6 +50,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Code from "@tiptap/extension-code";
 import { createClient } from "@/lib/supabase/browserClient";
 import { toast } from "sonner";
+import { useUser } from "@/hooks/useUser";
 
 interface TipTapProps {
   className?: string;
@@ -93,8 +94,7 @@ export const TipTap = ({ className, editorClassName, noteId }: TipTapProps) => {
   const [italic, toggleItalic] = useState(false);
   const [underline, toggleUnderline] = useState(false);
   const [strike, toggleStrike] = useState(false);
-
-
+  const {user} = useUser();
 
   const editor = useEditor({
     extensions: [
@@ -179,7 +179,7 @@ export const TipTap = ({ className, editorClassName, noteId }: TipTapProps) => {
         id="controls"
         className="flex overflow-scroll items-center gap-x-1 p-2 border-b shadow-sm rounded-t-lg border "
       >
-        <Button size="sm" variant="editor" onClick={onSave}>
+        <Button size="sm" variant="editor"disabled={user===null} onClick={onSave}>
           Save
         </Button>
         {
