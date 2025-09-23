@@ -51,7 +51,7 @@ export default async function PresentationPage({
       {/* Header */}
       <Header presentation={presentatation} />
 
-      <div className="grid lg:grid-cols-7 md:grid-cols-1 md:gap-y-2 h-full  justify-center w-full gap-x-2">
+      <div className="grid lg:grid-cols-7 md:grid-cols-1 gap-y-2 h-full  justify-center w-full gap-x-2">
         <div className="col-span-3 h-full md:flex lg:hidden">
           <Switcher
             id={presentatation.current_resource_id ? presentatation.current_resource_id : "-1"}
@@ -70,14 +70,14 @@ export default async function PresentationPage({
             id={id}
           />
           <ResourceList
-            className="h-[263px] overflow-hidden"
+            className="h-[263px] w-full overflow-hidden"
             rl_className="h-[260px] overflow-scroll mb-2"
             resources={resources}
           />
         </div>
 
         {/* Current Slide/Resource Preview */}
-        <div className="col-span-3 h-full md:hidden lg:flex">
+        <div className="col-span-3 h-full hidden lg:flex">
           <Switcher
             id={presentatation.current_resource_id ? presentatation.current_resource_id : "-1"}
             resources={resources}

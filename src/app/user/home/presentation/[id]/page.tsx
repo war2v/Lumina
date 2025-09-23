@@ -33,22 +33,21 @@ const ViewerPresentationPage = async ({
   }
 
   return (
-    <Container className="flex flex-col gap-y-4 p-4 ">
+    <Container className="flex flex-col gap-y-4 p-4 w-full">
+      {/* Header */}
       <div className="flex flex-col justify-between  px-3 text-muted-foreground font-semibold">
         <h1 className="text-2xl dark:text-white">{presentation.title}</h1>
         <h1 className="text-sm">{presentation.created_by_username}</h1>
         <h1 className="text-sm">{presentation.description}</h1>
       </div>
-      <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-4 h-full w-full">
-          
-        
-          <NoteEditor className="h-[600px] md:w-full w-[200px] " initialValue={userNote ? userNote.content : ""} />
-        
-        
-          <AttendeeSwitcher r_className="h-[600px] sm:max-w-xs" resources={resources} id={current_resource_id} projectId={presentation.id} />
-        
-        
+
+      {/* Viewer */}
+      <div className="flex flex-col gap-5 w-full">
+          <NoteEditor className="h-[720px]" initialValue={userNote ? userNote.content : ""} />
+          <AttendeeSwitcher r_className="h-[590px]" resources={resources} id={current_resource_id} projectId={presentation.id} />    
       </div>
+
+      {/* Resource List */}
       <div className="w-full py-4">
           <ResourceList className="w-full" resources={resources} />
         </div>

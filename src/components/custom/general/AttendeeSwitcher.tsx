@@ -85,9 +85,9 @@ export const AttendeeSwitcher = ({
           </Button>
         </div>
         {current === "current" ? (
-          <div className={`w-full h-[400px]`}>
+          <div className={`w-full `}>
             <CurrentResourceViewer
-              className="h-[400]"
+              className=""
               title="Presenter"
               resources={resources}
               current_resource_id={id}
@@ -97,14 +97,14 @@ export const AttendeeSwitcher = ({
         ) : current === "viewer" ? (
           <div>
             <CurrentLocalResource
-              className="h-[400px]"
+              className=""
               title="User"
               resources={resources}
             />
           </div>
         ) : (
           <div
-            className={`h-[400px] w-full ${
+            className={`w-full ${
               isFullscreen ? "h-full w-full" : ""
             } ${r_className}`}
           >

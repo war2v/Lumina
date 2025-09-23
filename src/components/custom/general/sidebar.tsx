@@ -45,7 +45,7 @@ export default function Sidebar() {
         className="mt-auto flex gap-2 items-center"
       >
         <LogOut className="w-4 h-4" />
-        Log Out
+        <span className="hidden md:flex">Log Out</span>
       </Button>
     </aside>
   );

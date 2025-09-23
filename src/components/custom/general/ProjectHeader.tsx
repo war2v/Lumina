@@ -37,7 +37,7 @@ const Header = ({ presentation }: HeaderProps) => {
       <h1 className="text-2xl text-muted-foreground font-semi">
         {presentation.title}
       </h1>
-      <div className="flex gap-2">
+      <div className="flex gap-2 overflow-scroll">
         <HoverCard>
           <HoverCardTrigger>
             <Button size="sm" variant="editor" onClick={openLinkResource}>
