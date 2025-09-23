@@ -23,6 +23,11 @@ export const getAccount = async () => {
         return null
     }
 
+    if ( !data || data.length === 0 ) {
+        console.log(data)
+        return null
+    }
+
 
     return { 
         id: data[0].id,

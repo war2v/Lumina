@@ -21,7 +21,7 @@ const ViewerPresentationPage = async ({
   const presentation = await getPresentationById(id.toString());
   const resources = await getResourcesById(id.toString());
   const current_resource_id = await getCurrentResourceId(id);
-  const userNote = await ensureUserNote();
+  const userNote = await ensureUserNote(id);
   //console.log();
 
   if (
@@ -42,7 +42,7 @@ const ViewerPresentationPage = async ({
       <div className="grid grid-cols-2 gap-4 h-full w-full">
           
           <div className="h-[730px] w-full">
-            <NoteEditor className="h-full" initialValue={""} />
+            <NoteEditor className="h-full" initialValue={userNote ? userNote.content : ""} />
           </div>
           <div className="grid h-[600px] lg:grid-cols-1  gap-x-4 md:gap-y-4">
             <AttendeeSwitcher r_className="h-[600px]" resources={resources} id={current_resource_id} projectId={presentation.id} />
