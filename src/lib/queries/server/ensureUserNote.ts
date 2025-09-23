@@ -1,5 +1,5 @@
 
-export const ensureUserNote = async (presentationId: string) => {
+export const ensureUserNote = async () => {
  
     return null;
   
